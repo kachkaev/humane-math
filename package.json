@@ -1,0 +1,27 @@
+{
+  "name": "humane-math",
+  "version": "0.0.0",
+  "description": "Human-friendly parser and evaluator for mathematical expressions",
+  "main": "humane-math.js",
+  "scripts": {
+    "test": "echo \"No tests so far\"; exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kachkaev/humane-math.git"
+  },
+  "keywords": [
+    "math",
+    "parsing",
+    "parser",
+    "formula",
+    "function",
+    "language",
+    "synonym"
+  ],
+  "author": "Alexander Kachkaev <alexander@kachkaev.ru> (http://en.kachkaev.ru)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kachkaev/humane-math/issues"
+  }
+}
