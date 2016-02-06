@@ -8,13 +8,13 @@ import Signal from 'signals';
 
 /**
  * Text is a main class used for keeping mathematical statements, expressions, etc.
- *
- * @param {ValidationRules}
- *        validation rules
- * @param {string}
- *        default content
  */
-export class Text{
+export class Text {
+    /**
+     * @param {Symbols} symbols
+     * @param {ValidationRules} validationRules
+     * @param {string} [defaultContent='']
+     */
     construct(symbols, validationRules, defaultContent = '') {
 
         this._tokenStream = new TokenStream();

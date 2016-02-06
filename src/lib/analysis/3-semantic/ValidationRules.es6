@@ -57,7 +57,7 @@ export class ValidationRules {
      * @returns {ValidationRules}
      *          Current object (OK for method chaining).
      */
-    clone = function() {
+    clone() {
         return _.map(this, _.clone);
     }
 }
