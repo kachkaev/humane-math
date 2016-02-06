@@ -7,23 +7,23 @@ import jsdocConfig from './.jsdoc.json';
 const version = '0.0.1'; // eslint-disable-line
 
 gulp.task('lint', () => {
-    gulp.src('./src/*.es6')
+    gulp.src('./src/*.js')
         .pipe(eslint())
         .pipe(eslint.formatEach('compact', process.stderr));});
 
-gulp.task('compile', () => {
-    gulp.src('./src/**/*.es6')
-    .pipe(gulp.dest('./'));
+gulp.task('build', () => {
+    gulp.src('./src/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('./build/'));
 });
 
 gulp.task('watch', () => {
-    gulp.watch('./src/**/*.es6', ['compile']);
+    gulp.watch('./src/**/*.js', ['build']);
 });
 
-gulp.task('doc', function (cb) {
-    gulp.src(['./src/**/*.es6'])
-        .pipe(babel())
+gulp.task('doc', ['build'], function (cb) {
+    gulp.src(['README.md', './build/**/*.js'])
         .pipe(jsdoc(jsdocConfig, cb));
 });
 
-gulp.task('default', ['compile', 'watch']);
+gulp.task('default', ['build', 'doc', 'watch']);

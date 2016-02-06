@@ -49,7 +49,7 @@
                    "exponentiate",
                    "fallthrough",
                    "jsdoc",
-                   "json",
+                   "js", "json",
                    "len",
                    "lex",
                    "ltrim",

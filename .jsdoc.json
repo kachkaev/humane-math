@@ -3,7 +3,6 @@
         "allowUnknownTags": true
     },
     "source": {
-      "includePattern": ".+\\.(js(doc)?|es6)$",
       "excludePattern": "(^|\\/|\\\\)_"
     },
     "opts": {
