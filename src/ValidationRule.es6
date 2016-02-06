@@ -1,61 +1,65 @@
 /**
- * Creates a single rule.
- *
- * @param {Object}
- *        value The rule itself (yes/no/including/excluding)
- * @param {Object}
- *        listOrParams Some additional parameters of the rule or a list.
- * @constructor
+ * Represents a single validation rule.
  */
-function MathValidationRule(value, listOrParams) {
-    if (!value)
-        value = MathValidationRule.NO;
-    this.value = value;
+export class ValidationRule {
 
-    if (_.isArray(listOrParams))
-        this.list = listOrParams;
-    else if (listOrParams != null)
-        $.extend(this, listOrParams);
-}
+    static NO = 0;
+    static ONLY = 1;
+    static EXCLUDING = 2;
+    static YES = 4;
 
-// / Some helpful constants
-MathValidationRule.NO = 0;
-MathValidationRule.ONLY = 1;
-MathValidationRule.EXCLUDING = 2;
-MathValidationRule.YES = 4;
+    /**
+    * @param {Object} value
+    *        The rule itself (yes/no/including/excluding)
+    * @param {Object} listOrParams
+    *        Some additional parameters of the rule or a list.
+    */
+    constructor (value, listOrParams) {
+        if (!value) {
+            value = ValidationRule.NO;
+        }
+        this.value = value;
 
-/**
- * Helps to determine using a short notation if the rule has type NO.
- *
- * @return {Boolean}
- */
-MathValidationRule.prototype.isNo = function() {
-    return this.value == MathValidationRule.NO;
-};
+        if (_.isArray(listOrParams)) {
+            this.list = listOrParams;
+        } else if (listOrParams != null) {
+            _.extend(this, listOrParams);
+        }
+    }
 
-/**
- * Helps to determine using a short notation if the rule has type ONLY
- *
- * @return {Boolean}
- */
-MathValidationRule.prototype.isOnly = function() {
-    return this.value == MathValidationRule.ONLY;
-};
+    /**
+     * Helps to determine using a short notation if the rule has type NO.
+     *
+     * @returns {boolean}
+     */
+    isNo() {
+        return this.value == ValidationRule.NO;
+    }
 
-/**
- * Helps to determine using a short notation if the rule has type EXCLUDING.
- *
- * @return {Boolean}
- */
-MathValidationRule.prototype.isExcluding = function() {
-    return this.value == MathValidationRule.EXCLUDING;
-};
+    /**
+     * Helps to determine using a short notation if the rule has type ONLY.
+     *
+     * @returns {boolean}
+     */
+    isOnly() {
+        return this.value == ValidationRule.ONLY;
+    }
 
-/**
- * Helps to determine using a short notation if the rule has type YES.
- *
- * @return {Boolean}
- */
-MathValidationRule.prototype.isYes = function() {
-    return this.value == MathValidationRule.YES;
-};
+    /**
+     * Helps to determine using a short notation if the rule has type EXCLUDING.
+     *
+     * @returns {boolean}
+     */
+    isExcluding() {
+        return this.value == ValidationRule.EXCLUDING;
+    }
+
+    /**
+     * Helps to determine using a short notation if the rule has type YES.
+     *
+     * @returns {boolean}
+     */
+    isYes() {
+        return this.value == ValidationRule.YES;
+    }
+ }

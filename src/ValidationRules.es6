@@ -1,64 +1,63 @@
+import {
+    ValidationRule
+} from 'humane-math';
+
 /**
- * @classDescription MathValidationRules is used by MathValidator to find errors
- *                   in a MathTree. Depending on this set of rules, an output of
- *                   validator can be different.
+ * ValidationRules are used by Validator to find errors
+ *  in a Tree. Depending on the set of rules, an output of
+ *  the validator can be different.
  *
- * @see MathValidationRulesBase for a preset list of rules
+ * @see StandardValidationRules for a preset list of rules
  *
- * Creates a set of rules. All rules are “no” by default.
- * @constructor
  */
-function MathValidationRules() {
-    this.useStandardFunctions = new MathValidationRule();
-    this.useStandardConstants = new MathValidationRule();
-    this.useStandardVariables = new MathValidationRule();
+export class ValidationRules {
 
-    // this.acceptMathOperations = new MathValidationRule();
-    this.acceptEquations = new MathValidationRule();
-    this.acceptInequalities = new MathValidationRule();
-    this.acceptSequenceOfStatements = new MathValidationRule();
-    this.acceptEmpty = new MathValidationRule();
-    this.acceptOnlyNumber = new MathValidationRule();
+    /**
+     * All rules are NO by default.
+     */
+    constructor() {
+        this.allowFunctions = new ValidationRule();
+        this.allowConstants = new ValidationRule();
+        this.allowVariables = new ValidationRule();
 
-    this.valueOnlyFinite = new MathValidationRule();
-    this.valueOnlyInteger = new MathValidationRule();
-    this.valueRange = new MathValidationRule();
-    this.valueOnlyGreaterThan = new MathValidationRule();
-    this.valueOnlyLessThan = new MathValidationRule();
+        // this.acceptMathOperations = new ValidationRule();
+        this.acceptEquations = new ValidationRule();
+        this.acceptInequalities = new ValidationRule();
+        this.acceptSequenceOfStatements = new ValidationRule();
+        this.acceptEmpty = new ValidationRule();
+        this.acceptOnlyNumber = new ValidationRule();
 
-    this.changed = new signals.Signal();
+        this.valueOnlyFinite = new ValidationRule();
+        this.valueOnlyInteger = new ValidationRule();
+        this.valueRange = new ValidationRule();
+        this.valueOnlyGreaterThan = new ValidationRule();
+        this.valueOnlyLessThan = new ValidationRule();
+    }
+
+    /**
+     * Sets a certain rule.
+     *
+     * @param {string} name
+     *        Name of the rule.
+     * @param {number} [value]
+     *        Value of a rule. NO by default.
+     * @param {string[]} [list]
+     *        List of exclusions.
+     * @returns {ValidationRules}
+     *          Current object (OK for method chaining).
+     */
+    setRule(name, value, list) {
+        this[name] = new ValidationRule(value, list);
+        return this;
+    }
+
+    /**
+     * Returns a deep copy of the set of validation rules.
+     *
+     * @returns {ValidationRules}
+     *          Current object (OK for method chaining).
+     */
+    clone = function() {
+        return _.map(this, _.clone);
+    }
 }
-
-MathValidationRules.prototype = {};
-
-/**
- * Sets a certain rule.
- *
- * @param {Object}
- *        name Name of a rule.
- * @param {Object}
- *        [value] Value of a rule. NO by default.
- * @param {Object}
- *        [list] List of exclusions.
- * @return {MathValidationRules} Current object (can be used in chains).
- */
-MathValidationRules.prototype.setRule = function(name, value, list) {
-    this[name] = new MathValidationRule(value, list);
-    return this;
-};
-
-/**
- * Returns a deep copy of the set of validation rules.
- *
- * @return {MathValidationRules} a copy of MathValidationRules object.
- */
-MathValidationRules.prototype.clone = function() {
-    return $.extend(true, {}, this);
-};
-
-/**
- * Avoids rules to be converted to JSON by json2 lib
- */
-MathValidationRules.prototype.toJSON = function() {
-    return null;
-};

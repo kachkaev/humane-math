@@ -1,30 +1,25 @@
 /*
- * Math Message keeps information about an error or warning, found in the Math Object
+ * Message keeps information about an error or a warning in a math text
  */
-/**
- * Creates a message
- * @param {Object} type
- * @param {Object} pos
- * @param {Object} params
- */
-function MathMessage(type, pos, params)
-{
-	this.type = type;
-	this.pos = pos;
-	this.params = params;
-	this.strCache = null;
+export class Message {
+
+    /**
+     * Creates a message
+     * @param {string} type
+     *        Unique textual identifier of a message type.
+     * @param {Pos} pos
+     *        Part of the Text the message is related to.
+     * @param {Object} params
+     *        Additional parameters of the message that clarify its context.
+     */
+    construct(type, pos, params = {}) {
+        this._type = type;
+        this._pos = pos;
+        this._params = params;
+        //this.strCache = null;
+    }
+
+    get type() {return this._type;}
+    get pos() {return this._pos;}
+    get params() {return this._params;}
 }
-
-MathMessage.prototype = {};
-
-/**
- * Returns a user-friendly message text with details.
- */
-MathMessage.prototype.toString = function()
-{
-	if (!this.params)
-		this.params = {};
-	if (!this.strCache) 
-		this.strCache = Lang.str(["math_message", this.type], _.extend(this.params, this.pos));
-	return this.strCache;
-};

@@ -1,43 +1,31 @@
+import AbstractType from 'humane-math';
+
 /**
- * Types of nodes in a syntax tree
+ * Types of nodes in a syntax tree
  */
-function MathTreeNodeType() {
+export class TreeNodeType extends AbstractType {
+
+    static EMPTY = 0;
+
+    static SEQUENCE_OF_STATEMENTS = 1;
+    static STATEMENT = 2;
+    static EXPRESSION = 3;
+    static TERM = 4;
+    static POWER = 5;
+    static SYMBOL = 6;
+    static NUMBER = 7;
+    static FUNCTION = 8;
+
+    // Symbol sub-types (detected during semantic analysis).
+    static STANDARD_CONSTANT = 32;
+    static STANDARD_VARIABLE = 33;
+    static STANDARD_FUNCTION = 34;
+
+    // These are statement sub-types (detected during lexical analysis)
+    // static STATEMENT_DEFINITION_VARIABLE = 64
+    // static STATEMENT_DEFINITION_FUNCTION = 65;
+    static STATEMENT_EQUATION = 66;
+    static STATEMENT_INEQUALITY = 67;
+
+    static E_UNPARSED = 128;
 }
-
-MathTreeNodeType.EMPTY = 0;
-
-MathTreeNodeType.SEQUENCE_OF_STATEMENTS = 1;
-MathTreeNodeType.STATEMENT = 2;
-MathTreeNodeType.EXPRESSION = 3;
-MathTreeNodeType.TERM = 4;
-MathTreeNodeType.POWER = 5;
-MathTreeNodeType.SYMBOL = 6;
-MathTreeNodeType.NUMBER = 7;
-MathTreeNodeType.FUNCTION = 8;
-
-// Symbol subtypes (detected during semantic analysis).
-MathTreeNodeType.STANDARD_CONSTANT = 32;
-MathTreeNodeType.STANDARD_VARIABLE = 33;
-MathTreeNodeType.STANDARD_FUNCTION = 34;
-
-// These are statement subtypes (detected during lexical analysis)
-// MathTreeNodeType.STATEMENT_DEFINITION_VARIABLE = 64
-// MathTreeNodeType.STATEMENT_DEFINITION_FUNCTION = 65;
-MathTreeNodeType.STATEMENT_EQUATION = 66;
-MathTreeNodeType.STATEMENT_INEQUALITY = 67;
-
-MathTreeNodeType.E_UNPARSED = 128;
-
-/**
- * Returns a “name of a type” (used for debug)
- * 
- * @param {Object}
- *        type
- */
-MathTreeNodeType.getAsString = function(type) {
-    for ( var k in MathTreeNodeType) {
-        if (MathTreeNodeType[k] == type)
-            return k;
-    }
-    return "";
-};

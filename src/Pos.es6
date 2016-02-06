@@ -1,80 +1,96 @@
 /**
- * Creates an object, that saves the position of a token/tree
- * node/error/warning, etc.
- * 
- * @param {Object}
- *        col Position — Column
- * @param {Object}
- *        row Position — Row
- * @param {Object}
- *        pos Absolute Position.
- * @param {Object}
- *        len Length of an object.
+ * Saves the position of a token / tree / node / error / warning, etc.
  */
-function MathPos(col, row, pos, length) {
-    this.col = col;
-    this.row = row;
-    this.pos = pos;
-    this.len = length;
-};
 
-MathPos.prototype = {};
+export class Pos {
 
-/**
- * Creates a new MathPos object which contains the whole range of characters
- * from the beginning of mathPos1 to the end of mathPos2.
- * 
- * @param {Object}
- *        mathPos1
- * @param {Object}
- *        mathPos2
- * @return {MathPos} new MathPos object.
- */
-MathPos.unite = function(mathPos1, mathPos2) {
-    return new MathPos(mathPos1.col, mathPos1.row, mathPos1.pos, mathPos2.len
-            + mathPos2.pos - mathPos1.pos);
-};
+    /**
+     * Creates an object that saves the position of
+     * token / tree / node / error / warning / etc.
+     *
+     * @param {int} col
+     *        Position — Column
+     * @param {int} row
+     *        Position — Row
+     * @param {int} pos
+     *        Absolute Position
+     * @param {int} length
+     *        Length of an object
+     */
+    construct(col, row, pos, length) {
+        this.col = col;
+        this.row = row;
+        this.pos = pos;
+        this.len = length;
+    }
 
-/**
- * Creates a new MathPos object which contains the range of characters between
- * end of mathPos1 to the beginning of mathPos2.
- * 
- * @param {Object}
- *        mathPos1
- * @param {Object}
- *        mathPos2
- * @return {MathPos} new MathPos object.
- */
-MathPos.between = function(mathPos1, mathPos2) {
-    return new MathPos(mathPos1.col + mathPos1.len, mathPos1.row, mathPos1.pos
-            + mathPos1.len, mathPos2.pos - mathPos1.pos - mathPos1.len);
-};
+    /**
+     * Creates a new Pos object which contains the whole range of characters
+     * from the beginning of pos1 to the end of pos2.
+     *
+     * @param {Pos} pos1
+     * @param {Pos} pos2
+     *
+     * @returns {Pos}
+     *          new Pos object.
+     */
+    unite(pos1, pos2) {
+        return new Pos(
+                pos1.col,
+                pos1.row,
+                pos1.pos,
+                pos2.len + pos2.pos - pos1.pos
+            );
+    }
 
-/**
- * Creates a new MathPos object with zero length at the beginning of mathPos.
- * 
- * @param {Object}
- *        mathPos
- * @return {MathPos} new MathPos object.
- */
-MathPos.beginning = function(mathPos) {
-    return new MathPos(mathPos.col, mathPos.row, mathPos.pos, 0);
-};
-/**
- * Creates a new MathPos object with zero length at the ending of mathPos.
- * 
- * @param {Object}
- *        mathPos
- * @return {MathPos} new MathPos object.
- */
-MathPos.ending = function(mathPos) {
-    return new MathPos(mathPos.col + mathPos.len, mathPos.row, mathPos.pos
-            + mathPos.len, 0);
-};
+    /**
+     * Creates a new Pos object which contains the range of characters between
+     * end of pos1 to the beginning of pos2.
+     *
+     * @param {Pos} pos1
+     * @param {Pos} pos2
+     *
+     * @returns {Pos}
+     *          new Pos object.
+     */
+    between(pos1, pos2) {
+        return new Pos(
+                pos1.col + pos1.len,
+                pos1.row,
+                pos1.pos + pos1.len,
+                pos2.pos - pos1.pos - pos1.len
+            );
+    }
 
-/**
- * Avoids token streams to be converted to JSON by json2 lib
- */
-MathPos.prototype.toJSON = function() {
-    return null;
-};
+    /**
+     * Creates a new Pos object with zero length at the beginning of the given pos.
+     *
+     * @param {Pos} pos
+     *
+     * @returns {Pos}
+     */
+    beginning(pos) {
+        return new Pos(
+                pos.col,
+                pos.row,
+                pos.pos,
+                0
+            );
+    }
+
+    /**
+     * Creates a new Pos object with zero length at the ending of the given pos.
+     *
+     * @param {Pos} pos
+     *
+     * @returns {Pos}
+     */
+    ending(pos) {
+        return new Pos(
+                pos.col + pos.len,
+                pos.row,
+                pos.pos + pos.len,
+                0
+            );
+    }
+}
