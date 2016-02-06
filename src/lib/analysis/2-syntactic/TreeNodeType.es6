@@ -1,9 +1,7 @@
-import AbstractType from 'humane-math';
-
 /**
  * Types of nodes in a syntax tree
  */
-export class TreeNodeType extends AbstractType {
+export class TreeNodeType {
 
     static EMPTY = 0;
 
