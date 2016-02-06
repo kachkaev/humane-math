@@ -1,8 +1,12 @@
-'use strict';
-
 import gulp from 'gulp';
+import eslint from 'gulp-eslint';
 
-const version = '0.0.1';
+const version = '0.0.1'; // eslint-disable-line
+
+gulp.task('lint', () => {
+    gulp.src('./src/*.es6')
+        .pipe(eslint())
+        .pipe(eslint.formatEach('compact', process.stderr));});
 
 gulp.task('compile', () => {
     gulp.src('./src/**/*.es6')
