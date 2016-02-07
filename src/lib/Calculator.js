@@ -13,7 +13,15 @@ import {
  * for adding or removing “value” property to nodes.
  * Calculator is a Visitor.
  */
-class Calculator {
+export default class Calculator {
+
+    /**
+     * This inner use exception is to be thrown anytime a calculation of sub-nodes
+     * fails. It is caught by a caller function and NaN is returned. Such approach
+     * is made to increase the speed of the calculator and avoid performing useless
+     * computations.
+     */
+    static COULD_NOT_CALCULATE_EXCEPTION = 13;
 
     /**
      * Recursively calculates values for all nodes starting at “treeNode” where it
@@ -301,13 +309,3 @@ class Calculator {
         return result;
     }
 }
-
-/**
- * This inner use exception is to be thrown anytime a calculation of sub-nodes
- * fails. It is caught by a caller function and NaN is returned. Such approach
- * is made to increase the speed of the calculator and avoid performing useless
- * computations.
- */
-Calculator.COULD_NOT_CALCULATE_EXCEPTION = 13;
-
-export default Calculator;
