@@ -6,11 +6,11 @@ import {TokenType}    from '../1-lexical/token-type';
 import {TreeNodeType} from '../2-syntactic/tree-node-type';
 
 /**
- * MathValidator applies semantic analysis on Text.
+ * Validator applies semantic analysis on Text.
  * It visits Tree instance and finds semantic
  * errors depending on what rule set is currently used.
  */
-export class MathValidator {
+export class Validator {
   constructor() {
     this.errors = new MessageList();
     //XXX start using warnings

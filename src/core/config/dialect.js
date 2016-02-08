@@ -1,11 +1,8 @@
 /**
- * Helper Class — Math Dialect To implement a functionality of aliases for
- * functions, it is necessary to know, what kind of an alias it is. This call
- * help to bring formulas to standard forms.
- *
+ * Helper Class — to implement a functionality of aliases for functions
  */
 
-export class MathDialect {
+export class Dialect {
   /** Standard western dialect, used by default (as a non-alias) */
   static WEST = 1;
 
