@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 /**
  * Container for functions, constants and variables
  */

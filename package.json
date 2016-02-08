@@ -71,6 +71,7 @@
     "mainVarName": "HumaneMath"
   },
   "dependencies": {
+    "remove-markdown": "^0.1.0",
     "underscore": "^1.8.3"
   }
 }

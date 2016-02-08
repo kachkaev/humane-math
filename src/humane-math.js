@@ -1,13 +1,8 @@
-//import Text from './lib/text';
+import Text from './core/text';
 
-const HumaneMath = {
-  version: '0.0.0',
+const HumaneMath = {};
 
-  greet() {
-    return 'hello';
-  }
-};
-
-//HumaneMath.Text = Text;
+HumaneMath.VERSION = '0.0.0';
+HumaneMath.Text = Text;
 
 export default HumaneMath;

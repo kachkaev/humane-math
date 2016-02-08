@@ -4,12 +4,12 @@ import {
   Tree,
   Validator
 } from 'humane-math';
-import Signal from 'signals';
+//import Signal from 'signals';
 
 /**
  * Text is a main class used for keeping mathematical statements, expressions, etc.
  */
-export class Text {
+export default class Text {
   /**
    * @param {Symbols} symbols
    * @param {ValidationRules} validationRules
@@ -28,7 +28,7 @@ export class Text {
     this.hasErrors = false;
     this.hasWarnings = false;
 
-    this.changed = new Signal();
+    //this.changed = new Signal();
 
     this.setContent(defaultContent);
   }
@@ -74,7 +74,7 @@ export class Text {
     this.errors = (new MessageList(this._tokenStream.errors,
         this._tree.errors, this._validator.errors)).sort();
 
-    this.changed.dispatch();
+    //this.changed.dispatch();
 
     // Return true as the text was changed
     return true;
@@ -106,7 +106,7 @@ export class Text {
         this._validator.errors
       )).sort();
 
-    this.changed.dispatch();
+    //this.changed.dispatch();
     return true;
   }
   //XXX remove or restore

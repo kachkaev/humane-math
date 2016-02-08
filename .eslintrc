@@ -87,8 +87,6 @@
         ]
     },
     globals: {
-        "_": true,
-        "process": true
     },
     "env": {
         "browser": true,

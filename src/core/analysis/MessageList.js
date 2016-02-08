@@ -1,3 +1,4 @@
+import _ from 'underscore';
 /**
  * MessageList is used to store lists of errors or warnings in Math classes.
  */

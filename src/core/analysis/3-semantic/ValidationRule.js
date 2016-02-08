@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 /**
  * Represents a single validation rule.
  */
