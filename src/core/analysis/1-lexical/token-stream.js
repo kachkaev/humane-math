@@ -1,5 +1,6 @@
 import _ from 'underscore';
-import s from 'underscore.string';
+import ltrim from 'underscore.string/ltrim';
+import rtrim from 'underscore.string/rtrim';
 import {Message}     from '../message';
 import {MessageList} from '../message-list';
 import {Token}       from './token';
@@ -119,7 +120,7 @@ export class TokenStream {
 
     // Initialize some temporary data needed while tokenizing
     this.temp = {};
-    this.temp.raw = s.rtrim(newRaw);
+    this.temp.raw = rtrim(newRaw);
     this.temp.pos = 0;
     this.temp.col = 0;
     this.temp.row = 0;
@@ -141,7 +142,7 @@ export class TokenStream {
         // Compound tokens part 1, see part 2 after all simple tokens
         // -- “less or equal” or “more or equal” (≤ and ≥ are below)
         if (this.temp.raw.charAt(0) == '<' || this.temp.raw.charAt(0) == '>') {
-          let searchString = s.ltrim(this.temp.raw.slice(1));
+          let searchString = ltrim(this.temp.raw.slice(1));
           if (searchString.charAt(0) == '=') {
             this.addToken(
                 (this.temp.raw.charAt(0) == '<')

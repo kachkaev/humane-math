@@ -67,6 +67,9 @@ function build() {
         libraryTarget: 'umd',
         library: config.mainVarName
       },
+      externals: {
+        'underscore': 'underscore'
+      },
       module: {
         loaders: [
           { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
