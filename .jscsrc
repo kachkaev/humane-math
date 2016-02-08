@@ -1,6 +1,7 @@
 {
   "preset": "google",
   "maximumLineLength": null,
+  "requireOperatorBeforeLineBreak": false,
   "esnext": true,
   "disallowSpacesInsideObjectBrackets": null
 }

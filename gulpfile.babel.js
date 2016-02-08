@@ -1,3 +1,4 @@
+/* eslint-disable spellcheck/spell-checker */
 import gulp  from 'gulp';
 import loadPlugins from 'gulp-load-plugins';
 import del  from 'del';
@@ -6,7 +7,7 @@ import path  from 'path';
 import {Instrumenter} from 'isparta';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
-import source  from 'vinyl-source-stream';
+import source  from 'vinyl-source-stream'; // eslint-disable-line
 
 import mochaGlobals from './test/setup/.globals';
 import manifest  from './package.json';
@@ -156,7 +157,7 @@ function testBrowser() {
     }, null, function() {
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
-        var watcher = gulp.watch(watchFiles, ['lint']);
+        var watcher = gulp.watch(watchFiles, ['lint']); // eslint-disable-line
       } else {
         $.livereload.reload('./tmp/__spec-build.js');
       }

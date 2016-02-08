@@ -3,7 +3,7 @@
  */
 export class Symbols {
 
-  constructor () {
+  constructor() {
     this.functionDefinitionsById = [];
     this.constantDefinitionsById = [];
     this.variableDefinitionsById = [];
@@ -90,12 +90,12 @@ export class Symbols {
    *
    * @private
    *
-   * @param {Array}
-   *    aliases Alternative names for the constant
-   * @param {number}
-   *    value Value of a constant
+   * @param {Array} aliases
+   *    Alternative names for the constant
+   * @param {number} value
+   *    Value of a constant
    */
-  addConstant (aliases, value) {
+  addConstant(aliases, value) {
     var currentConstantDefinition = {};
     currentConstantDefinition.id = this.extractIdFromAliases(aliases);
     currentConstantDefinition.aliases = aliases;
@@ -130,28 +130,28 @@ export class Symbols {
    * Performs a search for a requested function.
    *
    * @param {string} functionName
-   *    Name of a function that need to be found.
+   *        Name of a function that need to be found.
    *
    * @returns {?string}
-   *      id of a function (substitutes alias with the default name)
-   *      or null if it was not found.
+   *          id of a function (substitutes alias with the default name)
+   *          or null if it was not found.
    */
-  findFunction (functionName) {
+  findFunction(functionName) {
     return this.functionIdsByAlias[functionName] || null;
   }
 
   /**
    * Performs a search for a requested constant.
    *
-   * @param {string}
-   *    constantName name of a constant that need to be found.
+   * @param {string} constantName
+   *        Name of a constant that need to be found.
    *
    * @returns {?string}
-   *      id of a constant (substitutes alias with the default name)
-   *      or null if it was not found.
+   *          id of a constant (substitutes alias with the default name)
+   *          or null if it was not found.
    *
    */
-  findConstant (constantName) {
+  findConstant(constantName) {
     return this.constantIdsByAlias[constantName] || null;
   }
 
@@ -159,13 +159,13 @@ export class Symbols {
    * Performs a search for a requested variable.
    *
    * @param {string} variableName
-   *    Name of a variable that need to be found.
+   *        Name of a variable that need to be found.
    *
    * @returns {?string}
-   *      id of a variable (substitutes alias with the default name)
-   *      or null if it was not found.
+   *          id of a variable (substitutes alias with the default name)
+   *          or null if it was not found.
    */
-  findVariable (variableName) {
+  findVariable(variableName) {
     return this.variableIdsByAlias[variableName] || false;
   }
 
@@ -175,10 +175,10 @@ export class Symbols {
    *
    * @private
    *
-   * @param {Object}
-   *    whatToIndex reference to a list of functions/constants.
-   * @param {Object}
-   *    whereToPut reference to a list with indexes.
+   * @param {Object} whatToIndex
+   *    reference to a list of functions/constants.
+   * @param {Object} whereToPut
+   *    reference to a list with indexes.
    */
   indexAliases(whatToIndex, whereToPut) {
     _.each(whatToIndex, (symbolDefinition, symbolId) => {
@@ -193,7 +193,7 @@ export class Symbols {
    * @private
    *
    * @param {Object} aliases
-   *    key/value pairs
+   *        key/value pairs
    *
    * @returns {string}
    */

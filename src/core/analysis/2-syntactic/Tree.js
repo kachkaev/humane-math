@@ -136,7 +136,7 @@ export class Tree {
         }
 
         // Skip to the next SEMICOLON or to the end of the stream or to the last token
-        if (!this.tokenStream.findNextToken([ TokenType.SEMICOLON ], true)) {
+        if (!this.tokenStream.findNextToken([TokenType.SEMICOLON], true)) {
           this.tokenStream.lastToken(true);
         } else {
           // Add sub-action (semicolon position must be kept)
@@ -221,7 +221,7 @@ export class Tree {
         this.errors.add(new Message(
           'e_syn_statement_empty_left',
           leftPart.pos, {
-            currentToken : statementSign
+            currentToken: statementSign
           }
         ));
       }
@@ -229,15 +229,15 @@ export class Tree {
         this.errors.add(new Message(
           'e_syn_statement_empty_right',
           rightPart.pos, {
-            currentToken : statementSign
+            currentToken: statementSign
           }
         ));
       }
 
       // Add left part and right part as node sub-nodes
       currentNode.type = TreeNodeType.STATEMENT;
-      currentNode.subNodes = [ leftPart, rightPart ];
-      currentNode.subActions = [ statementSign ];
+      currentNode.subNodes = [leftPart, rightPart];
+      currentNode.subActions = [statementSign];
 
       ////////////////////////////////
       // Define sub-type depending on what is in the left and the right parts
@@ -265,8 +265,8 @@ export class Tree {
         this.errors.add(new Message(
             'e_syn_statement_extra_statement_sign',
             this.tokenStream.currentToken().pos, {
-              currentToken : this.tokenStream.currentToken(),
-              statementSign : statementSign
+              currentToken: this.tokenStream.currentToken(),
+              statementSign: statementSign
             }
           ));
 
@@ -310,7 +310,7 @@ export class Tree {
     // //////////////////////////////
     // Expression matches a pattern term (ADD|) term [(ADD|SUBTRACT) term ...]
     // //////////////////////////////
-    currentNode.subNodes = [ currentSubNode ];
+    currentNode.subNodes = [currentSubNode];
     currentNode.subActions = [];
     currentNode.type = TreeNodeType.EXPRESSION;
 
@@ -376,7 +376,7 @@ export class Tree {
     ////////////////////////////////
     // Term matches pattern 'power(MULTIPLY|DIVIDE|)power [...]'
     ////////////////////////////////
-    currentNode.subNodes = [ currentSubNode ];
+    currentNode.subNodes = [currentSubNode];
     currentNode.subActions = [];
 
     for (;;) {
@@ -418,10 +418,10 @@ export class Tree {
                 Pos.between(
                   this.tokenStream.previousToken().pos,
                   this.tokenStream.currentToken().pos), {
-                    previousToken : this.tokenStream
+                    previousToken: this.tokenStream
                     .previousToken()
                     .cloneWithCorrectedType(),
-                    currentToken : this.tokenStream.currentToken()
+                    currentToken: this.tokenStream.currentToken()
                     .cloneWithCorrectedType()
                   }));
           }
@@ -493,7 +493,7 @@ export class Tree {
     //////////////////////////////
     // Power matches a pattern factor (POWER) factor [(POWER)factor) ...]
     //////////////////////////////
-    currentNode.subNodes = [ currentSubNode ];
+    currentNode.subNodes = [currentSubNode];
     currentNode.subActions = [];
 
     while (this.tokenStream.currentToken().isPowerSign()) {
@@ -765,8 +765,7 @@ export class Tree {
 
       // Check for the right bracket
       // -- A Bracket was found
-      if (this.tokenStream.currentToken().isRightBracket())
-      {
+      if (this.tokenStream.currentToken().isRightBracket()) {
         // Error if expression in brackets is empty
         if (currentNode.type == TreeNodeType.EMPTY && !currentNode.brackets) {
           this.errors.add(new Message(
@@ -803,7 +802,7 @@ export class Tree {
           this.errors.add(new Message(
             'e_syn_brackets_wrong_symbol',
             this.tokenStream.currentToken().pos,
-            {currentToken : this.tokenStream.currentToken()}
+            {currentToken: this.tokenStream.currentToken()}
           ));
         }
 
@@ -929,7 +928,7 @@ export class Tree {
           this.errors.add(new Message(
               'e_syn_missing_operand_at_begin',
               Pos.beginning(this.tokenStream.currentToken().pos),
-              {currentToken : currentToken}
+              {currentToken: currentToken}
             ));
         }
 
@@ -939,8 +938,8 @@ export class Tree {
           this.errors.add(new Message(
               'e_syn_missing_operand',
               Pos.between(currentToken.pos, nextToken.pos), {
-                previousToken : currentToken,
-                currentToken : nextToken
+                previousToken: currentToken,
+                currentToken: nextToken
               }
             ));
         }
@@ -954,7 +953,7 @@ export class Tree {
           this.errors.add(new Message(
               'e_syn_missing_operand_at_end',
               Pos.between(currentToken.pos, nextToken.pos), {
-                currentToken : currentToken
+                currentToken: currentToken
               }
             ));
         }
@@ -972,7 +971,7 @@ export class Tree {
    */
   wrapNode(nodeToBeWrapped) {
     var wrapperNode = this.createEmptyTreeNode();
-    wrapperNode.subNodes = [ nodeToBeWrapped ];
+    wrapperNode.subNodes = [nodeToBeWrapped];
     wrapperNode.pos = nodeToBeWrapped.pos;
     wrapperNode.hasErrors = nodeToBeWrapped.hasErrors;
     return wrapperNode;

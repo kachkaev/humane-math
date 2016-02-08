@@ -20,7 +20,7 @@ export class Token {
    * @param {Numeric} value
    *    (Optional) Value (calculated data) for some token types
    */
-  constructor (type, col, row, pos, raw, value) {
+  constructor(type, col, row, pos, raw, value) {
     this.type = type;
     if (!_.isUndefined(raw)) {
       this.pos = new Pos(col, row, pos, raw.length);

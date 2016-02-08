@@ -42,8 +42,7 @@ export class MessageList {
    * @returns {MessageList}
    *     current object
    */
-  add(message)
-  {
+  add(message) {
     this._list.push(message);
     return this;
   }
@@ -54,8 +53,7 @@ export class MessageList {
    * @returns {boolean}
    *     true if the list is empty.
    */
-  isEmpty()
-  {
+  isEmpty() {
     return this._list.length == 0;
   }
 
@@ -64,8 +62,7 @@ export class MessageList {
    *
    * @returns {number}
    */
-  count()
-  {
+  count() {
     return this._list.length;
   }
 
@@ -75,10 +72,8 @@ export class MessageList {
    * @returns {MessageList}
    *     current object
    */
-  sort()
-  {
-    this._list = _.sortBy(this._list, function(mathMessage)
-    {
+  sort() {
+    this._list = _.sortBy(this._list, function(mathMessage) {
       if (mathMessage.pos) {
         return mathMessage.pos.pos + 0.0001 * mathMessage.pos.len;
       } else {

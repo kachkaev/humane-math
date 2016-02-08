@@ -20,7 +20,7 @@ export class Locale {
       let message = this.messages[messageId];
       if (_.isString(message)) {
         return message;
-      } else if (_.isFunction(message)){
+      } else if (_.isFunction(message)) {
         let params = _.extend(objectToLocalize.params || {}, objectToLocalize.pos);
         return message(params);
       }

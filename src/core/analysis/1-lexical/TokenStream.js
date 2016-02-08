@@ -80,10 +80,10 @@ export class TokenStream {
    *    Type of a Token (among MathTokeType.*)
    * @param {number} length
    *    Length of a new token
-   * @param {number} value
-   *    (optional) Evaluated value of a token (for symbols and numbers).
-   * @param {boolean}
-   *    dontThrowException (optional) if is set to true, no TOKEN_FOUND_EXCEPTION is thrown.
+   * @param {number} [value]
+   *    Evaluated value of a token (for symbols and numbers).
+   * @param {boolean} [dontThrowException]
+   *    if is set to true, no TOKEN_FOUND_EXCEPTION is thrown.
    */
   addToken(type, length, value, dontThrowException) {
     this.tokens.push(new Token(
@@ -372,7 +372,7 @@ export class TokenStream {
    * @param {boolean} [moveCursor=false]
    *    Set to true if cursor position needs to be changed.
    *
-   * @returns {Token}
+   * @returns {?Token}
    *      Token or null if the search was out of range.
    */
   getToken(tokenPos, moveCursor) {
@@ -462,11 +462,11 @@ export class TokenStream {
    * @param {boolean} [moveCursor=false]
    *    Set to true if cursor position needs to be changed.
    *
-   * @returns {Token} Token or null if the search was out of range.
+   * @returns {?Token} Token or null if the search was out of range.
    */
   findNextToken(tokenTypes, moveCursor) {
     if (!_.isArray(tokenTypes)) {
-      tokenTypes = [ tokenTypes ];
+      tokenTypes = [tokenTypes];
     }
 
     for (var i = this.cursorPos; i < this.tokens.length; i++) {
@@ -487,16 +487,16 @@ export class TokenStream {
    * Searches for a token of the specific type (or types) in the rest
    * of the token stream (from cursor) with respect to opening / closing brackets.
    *
-   * @param {Array}
-   *    tokenTypes list of tokens to be searched.
+   * @param {Array} tokenTypes
+   *    List of tokens to be searched.
    * @param {boolean} [moveCursor=false]
    *    Set to true if cursor position needs to be changed.
    *
-   * @returns {Token} Token or null if the search was out of range.
+   * @returns {?Token} Token or null if the search was out of range.
    */
   findNextTokenAtTheSameLevel(tokenTypes, moveCursor) {
     if (!_.isArray(tokenTypes)) {
-      tokenTypes = [ tokenTypes ];
+      tokenTypes = [tokenTypes];
     }
 
     var level = 0;

@@ -14,7 +14,7 @@ export class ValidationRule {
   * @param {Object} listOrParams
   *    Some additional parameters of the rule or a list.
   */
-  constructor (value, listOrParams) {
+  constructor(value, listOrParams) {
     if (!value) {
       value = ValidationRule.NO;
     }

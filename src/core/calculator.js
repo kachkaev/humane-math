@@ -80,13 +80,12 @@ export default class Calculator {
    * is possible and stores the result at node.value. This can be useful for
    * increasing the speed of further calculations.
    *
-   * @param {MathTreeNode}
-   *    treeNode A MathTreeNode to be calculated. Can be any type of node.
-   * @param {Object}
-   *    variables Variables passed.
-   * @param {Object}
-   *    userSymbols Set of user constants and functions. Not in use now.
-   * @returns {void}
+   * @param {MathTreeNode} treeNode
+   *    A MathTreeNode to be calculated. Can be any type of node.
+   * @param {Object} variables
+   *    Variables passed.
+   * @param {Object} userSymbols
+   *    Set of user constants and functions. Not in use now.
    */
   calculateCachedValues(treeNode, variables, userSymbols) {
     if (treeNode instanceof Text) {
@@ -120,7 +119,7 @@ export default class Calculator {
 
     // Recursively clear child nodes.
     if (treeNode.subNodes) {
-      for ( let i = treeNode.subNodes.length - 1; i >= 0; i--) {
+      for (let i = treeNode.subNodes.length - 1; i >= 0; i--) {
         this.clearCachedValues(treeNode.subNodes[i]);
       }
     }
@@ -176,7 +175,7 @@ export default class Calculator {
 
     // Calculate values for all children sub-nodes if there are any.
     if (treeNode.subNodes) {
-      for ( let i = treeNode.subNodes.length - 1; i >= 0; i--) {
+      for (let i = treeNode.subNodes.length - 1; i >= 0; i--) {
         // Try to get the value of a sub-node and saving it.
         if (treeNode.subNodes[i].value === undefined) {
           // If failOnSubNodeNaN is false, calculations are made in

@@ -5,6 +5,7 @@ export class Message {
 
   /**
    * Creates a message
+   *
    * @param {string} type
    *    Unique textual identifier of a message type.
    * @param {Pos} pos

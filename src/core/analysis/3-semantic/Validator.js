@@ -199,9 +199,8 @@ export class MathValidator {
 
       /////////////////////////////
       // Unknown symbol
-      this.errors.add(new Message('e_sem_unknown_symbol', treeNode.pos, {name:treeNode.nameRaw}));
-      return
-
+      this.errors.add(new Message('e_sem_unknown_symbol', treeNode.pos, {name: treeNode.nameRaw}));
+      return;
 
     /////////////////////////////
     // Function (or a misused constant or variable name)
@@ -367,10 +366,9 @@ export class MathValidator {
       this.errors.add(new Message(
           'e_sem_unknown_function',
           treeNode.namePos,
-          {name:treeNode.nameRaw}
+          {name: treeNode.nameRaw}
         ));
       return;
-
 
     /////////////////////////////
     // Inequality or equation
@@ -417,14 +415,14 @@ export class MathValidator {
   /**
    * Validates sub-nodes of a given node.
    *
-   * @param {Object}
-   *    treeNode
+   * @param {Object} treeNode
+   *        Node to work with.
    * @param {Symbols} symbols
-   *    Symbols being used.
+   *        Symbols being used.
    * @param {ValidationRules} rules
-   *    Set of validation rules being used.
+   *        Set of validation rules being used.
    */
-  validateSubNodes(treeNode, symbols, rules){
+  validateSubNodes(treeNode, symbols, rules) {
     var subNode;
     for (var i in treeNode.subNodes) {
       if (!treeNode.subNodes.hasOwnProperty(i)) {
