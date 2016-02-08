@@ -54,6 +54,7 @@
                    "fallthrough",
                    "globals", "Globals",
                    "http", "Http",
+                   "init",
                    "jsdoc",
                    "js", "json",
                    "len",

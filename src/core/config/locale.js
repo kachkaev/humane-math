@@ -1,9 +1,12 @@
 import _ from 'underscore';
 import * as removeMarkdown from 'remove-markdown';
-import {Message}      from './core/message';
+import {Message}      from '../analysis/message';
 
 export class Locale {
 
+  constructor(data) {
+    this.data = data;
+  }
   /**
    * Returns a user-friendly message markdown with details.
    *
