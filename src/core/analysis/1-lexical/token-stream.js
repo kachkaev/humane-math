@@ -1,12 +1,9 @@
 import _ from 'underscore';
-import {
-  Message,
-  MessageList,
-  Token,
-  TokenType
-} from 'humane-math';
-
-import s from 'underscore-string';
+import s from 'underscore.string';
+import {Message}     from '../message';
+import {MessageList} from '../message-list';
+import {Token}       from './token';
+import {TokenType}   from './token-type';
 
 /**
  * Converts an input stream into tokens

@@ -1,15 +1,13 @@
-import {
-  MessageList,
-  TokenStream,
-  Tree,
-  Validator
-} from 'humane-math';
 //import Signal from 'signals';
+import MessageList from './analysis/message-list';
+import TokenStream from './analysis/1-lexical/token-stream';
+import Tree        from './analysis/2-syntactic/tree';
+import Validator   from './analysis/3-semantic/validator';
 
 /**
  * Text is a main class used for keeping mathematical statements, expressions, etc.
  */
-export default class Text {
+export class Text {
   /**
    * @param {Symbols} symbols
    * @param {ValidationRules} validationRules

@@ -1,7 +1,5 @@
 import _ from 'underscore';
-import {
-  ValidationRule
-} from 'humane-math';
+import {ValidationRule}      from './validation-rule';
 
 /**
  * ValidationRules are used by Validator to find errors

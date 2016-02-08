@@ -1,6 +1,4 @@
-import {
-  TreeNodeType
-} from 'humane-math';
+import {TreeNodeType} from './tree-node-type';
 
 /**
  * Part of Tree

@@ -1,8 +1,6 @@
 import _ from 'underscore';
-import {
-  Pos,
-  TokenType
-} from 'humane-math';
+import {Pos}       from '../pos';
+import {TokenType} from './token-type';
 
 export class Token {
   /**

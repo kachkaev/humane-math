@@ -1,11 +1,9 @@
 import _ from 'underscore';
-import {
-  Message,
-  MessageList,
-  Pos,
-  TokenType,
-  TreeNodeType
-} from 'humane-math';
+import {Message}      from '../message';
+import {MessageList}  from '../message-list';
+import {Pos}          from '../pos';
+import {TokenType}    from '../1-lexical/token-type';
+import {TreeNodeType} from '../2-syntactic/tree-node-type';
 
 /**
  * MathValidator applies semantic analysis on Text.

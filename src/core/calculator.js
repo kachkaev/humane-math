@@ -14,7 +14,7 @@ import {
  * for adding or removing “value” property to nodes.
  * Calculator is a Visitor.
  */
-export default class Calculator {
+export class Calculator {
 
   /**
    * This inner use exception is to be thrown anytime a calculation of sub-nodes

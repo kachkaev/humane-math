@@ -1,8 +1,6 @@
 import _ from 'underscore';
 import * as removeMarkdown from 'remove-markdown';
-import {
-  Message
-} from 'humane-math';
+import {Message}      from './core/message';
 
 export class Locale {
 

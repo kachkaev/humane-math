@@ -1,13 +1,11 @@
 import _ from 'underscore';
-import {
-  Message,
-  MessageList,
-  Pos,
-  Token,
-  TreeNodeType,
-  TreeNode,
-  TokenType
-} from 'humane-math';
+import {Message}      from '../message';
+import {MessageList}  from '../message-list';
+import {Pos}          from '../pos';
+import {TokenType}    from '../1-lexical/token-type';
+import {Token}        from '../1-lexical/token';
+import {TreeNodeType} from './tree-node-type';
+import {TreeNode}     from './tree-node';
 
 /**
  * Creates an empty instance of Tree object
