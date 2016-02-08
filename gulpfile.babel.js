@@ -68,7 +68,7 @@ function build() {
         library: config.mainVarName
       },
       externals: {
-        'underscore': 'underscore'
+        'underscore': '_'
       },
       module: {
         loaders: [
@@ -142,6 +142,9 @@ function testBrowser() {
       entry: allFiles,
       output: {
         filename: '__spec-build.js'
+      },
+      externals: {
+        'underscore': '_'
       },
       module: {
         loaders: [

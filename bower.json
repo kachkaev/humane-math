@@ -1,0 +1,34 @@
+{
+  "name": "humane-math",
+  "description": "Human-friendly parser and evaluator for mathematical expressions",
+  "main": "dist/humane-math.js",
+  "authors": [
+    "Alexander Kachkaev <alexander@kachkaev.ru> (http://en.kachkaev.ru)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "math",
+    "parsing",
+    "parser",
+    "formula",
+    "function",
+    "language",
+    "synonym"
+  ],
+  "homepage": "https://github.com/kachkaev/humane-math",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}
