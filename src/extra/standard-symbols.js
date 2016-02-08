@@ -1,16 +1,14 @@
-import {
-  Dialect,
-  Symbols
-} from 'humane-math';
+import {HumaneMath} from '../core/core';
 
-/* eslint-disable indent */
+/* eslint-disable indent, spellcheck/spell-checker */
 /* See http://github.com/eslint/eslint/issues/4696 */
 
 /**
  * The class is a standard source for properties of all standard functions,
  * constants and variables.
  */
-export class StandardSymbols extends Symbols {
+
+class StandardSymbols extends HumaneMath.Symbols {
 
   construct() {
     this.addTrigonometricFunctions();
@@ -33,64 +31,64 @@ export class StandardSymbols extends Symbols {
 
     // Sine
     this.addFunction({
-        'sin'  : Dialect.WEST,
-        'sine' : Dialect.WEST_LONG,
-        'син'  : Dialect.RUS,
-        'синус': Dialect.RUS_LONG
+        'sin':   HumaneMath.Dialect.WEST,
+        'sine':  HumaneMath.Dialect.WEST_LONG,
+        'син':   HumaneMath.Dialect.RUS,
+        'синус': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.sin(params[0])
     );
 
     // Cosine
     this.addFunction({
-        'cos'  : Dialect.WEST,
-        'cosine' : Dialect.WEST_LONG,
-        'кос'  : Dialect.RUS,
-        'косинус': Dialect.RUS_LONG
+        'cos':     HumaneMath.Dialect.WEST,
+        'cosine':  HumaneMath.Dialect.WEST_LONG,
+        'кос':     HumaneMath.Dialect.RUS,
+        'косинус': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.cos(params[0])
     );
 
     // Tangent
     this.addFunction({
-        'tan'  : Dialect.WEST,
-        'tangent': Dialect.WEST_LONG,
-        'tg'   : Dialect.EAST,
-        'тан'  : Dialect.RUS,
-        'тангенс': Dialect.RUS_LONG
+        'tan':     HumaneMath.Dialect.WEST,
+        'tangent': HumaneMath.Dialect.WEST_LONG,
+        'tg':      HumaneMath.Dialect.EAST,
+        'тан':     HumaneMath.Dialect.RUS,
+        'тангенс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.tan(params[0])
     );
 
     // Cotangent
     this.addFunction({
-        'cot'    : Dialect.WEST,
-        'cotangent': Dialect.WEST_LONG,
-        'ctg'    : Dialect.EAST,
-        'ctn'    : Dialect.EAST,
-        'котан'  : Dialect.RUS,
-        'котангенс': Dialect.RUS_LONG
+        'cot':       HumaneMath.Dialect.WEST,
+        'cotangent': HumaneMath.Dialect.WEST_LONG,
+        'ctg':       HumaneMath.Dialect.EAST,
+        'ctn':       HumaneMath.Dialect.EAST,
+        'котан':     HumaneMath.Dialect.RUS,
+        'котангенс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => 1.0 / Math.tan(params[0])
     );
 
     // Secant
     this.addFunction({
-        'sec'   : Dialect.WEST,
-        'secant': Dialect.WEST_LONG,
-        'сек'   : Dialect.RUS,
-        'секанс': Dialect.RUS_LONG
+        'sec':    HumaneMath.Dialect.WEST,
+        'secant': HumaneMath.Dialect.WEST_LONG,
+        'сек':    HumaneMath.Dialect.RUS,
+        'секанс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => 1.0 / Math.cos(params[0])
     );
 
     // Cosecant
     this.addFunction({
-        'csc'   : Dialect.WEST,
-        'cosecant': Dialect.WEST_LONG,
-        'cosec'   : Dialect.EAST,
-        'косек'   : Dialect.RUS,
-        'косеканс': Dialect.RUS_LONG
+        'csc':      HumaneMath.Dialect.WEST,
+        'cosecant': HumaneMath.Dialect.WEST_LONG,
+        'cosec':    HumaneMath.Dialect.EAST,
+        'косек':    HumaneMath.Dialect.RUS,
+        'косеканс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => 1.0 / Math.sin(params[0])
     );
@@ -100,57 +98,57 @@ export class StandardSymbols extends Symbols {
 
     // Arcsine
     this.addFunction({
-        'arcsin'  : Dialect.WEST,
-        'arcsine' : Dialect.WEST_LONG,
-        'asin'  : Dialect.PROGRAMMING,
-        'арксин'  : Dialect.RUS,
-        'арксинус': Dialect.RUS_LONG
+        'arcsin':   HumaneMath.Dialect.WEST,
+        'arcsine':  HumaneMath.Dialect.WEST_LONG,
+        'asin':     HumaneMath.Dialect.PROGRAMMING,
+        'арксин':   HumaneMath.Dialect.RUS,
+        'арксинус': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.asin(params[0])
     );
 
     // Arccosine
     this.addFunction({
-        'arccos'  : Dialect.WEST,
-        'arccosine' : Dialect.WEST_LONG,
-        'acos'    : Dialect.PROGRAMMING,
-        'арккос'  : Dialect.RUS,
-        'арккосинус': Dialect.RUS_LONG
+        'arccos':     HumaneMath.Dialect.WEST,
+        'arccosine':  HumaneMath.Dialect.WEST_LONG,
+        'acos':       HumaneMath.Dialect.PROGRAMMING,
+        'арккос':     HumaneMath.Dialect.RUS,
+        'арккосинус': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.acos(params[0])
     );
 
     // Arctangent
     this.addFunction({
-        'arctan'  : Dialect.WEST,
-        'arctangent': Dialect.WEST_LONG,
-        'arctg'   : Dialect.EAST,
-        'atan'    : Dialect.PROGRAMMING,
-        'арктан'  : Dialect.RUS,
-        'арктангенс': Dialect.RUS_LONG
+        'arctan':     HumaneMath.Dialect.WEST,
+        'arctangent': HumaneMath.Dialect.WEST_LONG,
+        'arctg':      HumaneMath.Dialect.EAST,
+        'atan':       HumaneMath.Dialect.PROGRAMMING,
+        'арктан':     HumaneMath.Dialect.RUS,
+        'арктангенс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.atan(params[0])
     );
 
     // Arccotangent
     this.addFunction({
-        'arccot'    : Dialect.WEST,
-        'arccotangent': Dialect.WEST_LONG,
-        'arcctg'    : Dialect.EAST,
-        'acot'    : Dialect.PROGRAMMING,
-        'арккотан'  : Dialect.RUS,
-        'арккотангенс': Dialect.RUS_LONG
+        'arccot':       HumaneMath.Dialect.WEST,
+        'arccotangent': HumaneMath.Dialect.WEST_LONG,
+        'arcctg':       HumaneMath.Dialect.EAST,
+        'acot':         HumaneMath.Dialect.PROGRAMMING,
+        'арккотан':     HumaneMath.Dialect.RUS,
+        'арккотангенс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => (params[0] < 0 ? Math.PI : 0) + Math.atan(1 / params[0])
     );
 
     // Arcsecant
     this.addFunction({
-        'arcsec': Dialect.WEST,
-        'arcsecant' : Dialect.WEST_LONG,
-        'asec' : Dialect.PROGRAMMING,
-        'арксек' : Dialect.RUS,
-        'арксеканс' : Dialect.RUS_LONG
+        'arcsec':    HumaneMath.Dialect.WEST,
+        'arcsecant': HumaneMath.Dialect.WEST_LONG,
+        'asec':      HumaneMath.Dialect.PROGRAMMING,
+        'арксек':    HumaneMath.Dialect.RUS,
+        'арксеканс': HumaneMath.Dialect.RUS_LONG
 
       },
       (params) => Math.acos(1 / params[0])
@@ -158,12 +156,12 @@ export class StandardSymbols extends Symbols {
 
     // Arccosecant
     this.addFunction({
-        'arccsc': Dialect.WEST,
-        'arcsecant' : Dialect.WEST_LONG,
-        'arccosec' : Dialect.EAST,
-        'acosec' : Dialect.PROGRAMMING,
-        'арксек' : Dialect.RUS,
-        'арккосеканс' : Dialect.RUS_LONG
+        'arccsc':      HumaneMath.Dialect.WEST,
+        'arcsecant':   HumaneMath.Dialect.WEST_LONG,
+        'arccosec':    HumaneMath.Dialect.EAST,
+        'acosec':      HumaneMath.Dialect.PROGRAMMING,
+        'арксек':      HumaneMath.Dialect.RUS,
+        'арккосеканс': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.asin(1 / params[0])
     );
@@ -173,47 +171,47 @@ export class StandardSymbols extends Symbols {
 
     // Hyperbolic sine
     this.addFunction({
-        'sinh': Dialect.WEST,
-        'sh' : Dialect.EAST
+        'sinh': HumaneMath.Dialect.WEST,
+        'sh':   HumaneMath.Dialect.EAST
       },
       (params) => (Math.exp(params[0]) - Math.exp(-params[0])) / 2.0
     );
 
     // Hyperbolic cosine
     this.addFunction({
-        'cosh': Dialect.WEST,
-        'ch' : Dialect.EAST
+        'cosh': HumaneMath.Dialect.WEST,
+        'ch':   HumaneMath.Dialect.EAST
       },
       (params) => (Math.exp(params[0]) + Math.exp(-params[0])) / 2.0
     );
 
     // Hyperbolic tangent
     this.addFunction({
-        'tanh': Dialect.WEST,
-        'th' : Dialect.EAST
+        'tanh': HumaneMath.Dialect.WEST,
+        'th':   HumaneMath.Dialect.EAST
       },
       (params) => (Math.exp(2 * params[0]) - 1.0) / (Math.exp(2 * params[0]) + 1.0)
     );
 
     // Hyperbolic cotangent
     this.addFunction({
-        'coth': Dialect.WEST,
-        'сth' : Dialect.EAST
+        'coth': HumaneMath.Dialect.WEST,
+        'сth':  HumaneMath.Dialect.EAST
       },
       (params) => (Math.exp(2 * params[0]) + 1.0) / (Math.exp(2 * params[0]) - 1.0)
     );
 
     // Hyperbolic secant
     this.addFunction({
-        'sech': Dialect.WEST
+        'sech': HumaneMath.Dialect.WEST
       },
       (params) => 2.0 / (Math.exp(params[0]) + Math.exp(-params[0]))
     );
 
     // Hyperbolic cosecant
     this.addFunction({
-        'csch': Dialect.WEST,
-        'cosech' : Dialect.EAST
+        'csch':   HumaneMath.Dialect.WEST,
+        'cosech': HumaneMath.Dialect.EAST
       },
       (params) => 2.0 / (Math.exp(params[0]) - Math.exp(-params[0]))
     );
@@ -222,24 +220,24 @@ export class StandardSymbols extends Symbols {
   addInverseHyperbolicTrigonometricFunctions() {
     // Hyperbolic arcsine
     this.addFunction({
-        'arcsinh': Dialect.WEST,
-        'arsh' : Dialect.EAST
+        'arcsinh': HumaneMath.Dialect.WEST,
+        'arsh':    HumaneMath.Dialect.EAST
       },
       (params) => Math.log(params[0] + Math.sqrt(params[0] * params[0] + 1))
     );
 
     // Hyperbolic arccosine
     this.addFunction({
-        'arccosh': Dialect.WEST,
-        'arch'   : Dialect.EAST
+        'arccosh': HumaneMath.Dialect.WEST,
+        'arch':    HumaneMath.Dialect.EAST
       },
       (params) => params[0] >= 1 ? (Math.log(params[0] + Math.sqrt(params[0] * params[0] - 1))) : NaN
     );
 
     // Hyperbolic arctangent
     this.addFunction({
-        'arctanh': Dialect.WEST,
-        'arth'   : Dialect.EAST
+        'arctanh': HumaneMath.Dialect.WEST,
+        'arth':    HumaneMath.Dialect.EAST
       },
       (params) => (params[0] < 1 && params[0] > -1)
               ? (Math.log((1 + params[0]) / (1 - params[0])) / 2)
@@ -248,8 +246,8 @@ export class StandardSymbols extends Symbols {
 
     // Hyperbolic arccotangent
     this.addFunction({
-        'arccoth': Dialect.WEST,
-        'arcth'  : Dialect.EAST
+        'arccoth': HumaneMath.Dialect.WEST,
+        'arcth':   HumaneMath.Dialect.EAST
       },
       (params) => (params[0] > 1 || params[0] < -1)
               ? (Math.log((params[0] + 1) / (params[0]) - 1) / 2)
@@ -258,8 +256,8 @@ export class StandardSymbols extends Symbols {
 
     // Hyperbolic arcsecant
     this.addFunction({
-        'arcsech': Dialect.WEST,
-        'arsch' : Dialect.EAST
+        'arcsech': HumaneMath.Dialect.WEST,
+        'arsch':   HumaneMath.Dialect.EAST
       },
       (params) => (params[0] > 0 && params[0] <= 1)
               ? Math.log((1 + Math.sqrt(1 - params[0] * params[0])) / params[0])
@@ -268,8 +266,8 @@ export class StandardSymbols extends Symbols {
 
     // Hyperbolic arccosecant
     this.addFunction({
-        'arccsch': Dialect.WEST,
-        'arcsch' : Dialect.EAST
+        'arccsch': HumaneMath.Dialect.WEST,
+        'arcsch':  HumaneMath.Dialect.EAST
       },
       (params) => Math.log(1 / params[0] + Math.sqrt(params[0] * params[0] + 1) / Math.abs(params[0]))
     );
@@ -278,28 +276,28 @@ export class StandardSymbols extends Symbols {
   addRoundingFunctions() {
 
     this.addFunction({
-        'round': Dialect.WEST
+        'round': HumaneMath.Dialect.WEST
       },
       (params) => Math.round(params[0])
     );
 
     this.addFunction({
-        'floor': Dialect.WEST
+        'floor': HumaneMath.Dialect.WEST
       },
       (params) => Math.floor(params[0])
     );
 
     this.addFunction({
-        'ceil': Dialect.WEST,
-        'ceiling' : Dialect.WEST_LONG
+        'ceil':    HumaneMath.Dialect.WEST,
+        'ceiling': HumaneMath.Dialect.WEST_LONG
       },
       (params) => Math.ceil(params[0])
     );
 
     this.addFunction({
-        'frac': Dialect.WEST,
-        'fractional' : Dialect.WEST_LONG,
-        'fract' : Dialect.MISC
+        'frac':       HumaneMath.Dialect.WEST,
+        'fractional': HumaneMath.Dialect.WEST_LONG,
+        'fract':      HumaneMath.Dialect.MISC
       },
       (params) => params[0] - Math.floor(params[0])
     );
@@ -309,9 +307,9 @@ export class StandardSymbols extends Symbols {
 
     // Power
     this.addFunction({
-        'pow': Dialect.WEST,
-        'power' : Dialect.WEST_LONG,
-        'степень' : Dialect.RUS_LONG
+        'pow':     HumaneMath.Dialect.WEST,
+        'power':   HumaneMath.Dialect.WEST_LONG,
+        'степень': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.pow(params[0], params[1]),
       2
@@ -319,24 +317,24 @@ export class StandardSymbols extends Symbols {
 
     // Argument to the power 2
     this.addFunction({
-      'sqr': Dialect.WEST,
-      'квадрат' : Dialect.RUS_LONG
+        'sqr':     HumaneMath.Dialect.WEST,
+        'квадрат': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.pow(params[0], 2)
     );
 
     // Square root
     this.addFunction({
-        'sqrt': Dialect.WEST,
-        'кк' : Dialect.RUS
+        'sqrt': HumaneMath.Dialect.WEST,
+        'кк':   HumaneMath.Dialect.RUS
       },
       (params) => Math.sqrt(params[0])
     );
 
     // Cubic root
     this.addFunction({
-        'cbrt': Dialect.WEST
-        /*'кубкорень': Dialect.RUS_LONG*/
+        'cbrt': HumaneMath.Dialect.WEST
+        /*'кубкорень': HumaneMath.Dialect.RUS_LONG*/
       },
       (params) => params[0] >= 0
               ? Math.pow(params[0], 1 / 3)
@@ -345,8 +343,8 @@ export class StandardSymbols extends Symbols {
 
     // Root
     this.addFunction({
-        'root': Dialect.WEST,
-        'корень' : Dialect.RUS_LONG
+        'root':   HumaneMath.Dialect.WEST,
+        'корень': HumaneMath.Dialect.RUS_LONG
       },
       (params) => {
         if (Math.floor(params[0]) != params[0] || params[0] < 1) {
@@ -362,16 +360,16 @@ export class StandardSymbols extends Symbols {
 
     // E power argument
     this.addFunction({
-        'exp': Dialect.WEST
+        'exp': HumaneMath.Dialect.WEST
       },
       (params) => Math.exp(params)
     );
 
     // Logarithm
     this.addFunction({
-        'log': Dialect.WEST,
-        'лог' : Dialect.RUS,
-        'логарифм' : Dialect.RUS_LONG
+        'log':      HumaneMath.Dialect.WEST,
+        'лог':      HumaneMath.Dialect.RUS,
+        'логарифм': HumaneMath.Dialect.RUS_LONG
       },
       (params) => Math.log(params[1]) / Math.log(params[0]),
       2
@@ -379,14 +377,14 @@ export class StandardSymbols extends Symbols {
 
     // Natural logarithm
     this.addFunction({
-        'ln': Dialect.WEST
+        'ln': HumaneMath.Dialect.WEST
       },
       (params) => Math.log(params[0])
     );
 
     // Common logarithm
     this.addFunction({
-        'lg': Dialect.WEST
+        'lg': HumaneMath.Dialect.WEST
       },
       (params) => Math.log(params[0]) / Math.LN10
     );
@@ -395,16 +393,16 @@ export class StandardSymbols extends Symbols {
   addMiscFunctions() {
     // Abs
     this.addFunction({
-        'abs'  : Dialect.WEST,
-        'modulus': Dialect.MISC,
-        'модуль' : Dialect.RUS_LONG
+        'abs':     HumaneMath.Dialect.WEST,
+        'modulus': HumaneMath.Dialect.MISC,
+        'модуль':  HumaneMath.Dialect.RUS_LONG
       },
         (params) => Math.abs(params[0])
     );
 
     // Random number from 0 to 1. Calculated every time (no caching)
     this.addFunction({
-        'random': Dialect.WEST
+        'random': HumaneMath.Dialect.WEST
       },
       () => Math.random(),
       0,
@@ -413,7 +411,7 @@ export class StandardSymbols extends Symbols {
 
     // Random number from 0 to 1. Calculated once
     this.addFunction({
-        'random2': Dialect.WEST
+        'random2': HumaneMath.Dialect.WEST
       },
       () => Math.random(),
       0
@@ -421,8 +419,8 @@ export class StandardSymbols extends Symbols {
 
     // Sign of the argument
     this.addFunction({
-        'sgn': Dialect.WEST,
-        'sign': Dialect.WEST_LONG
+        'sgn':  HumaneMath.Dialect.WEST,
+        'sign': HumaneMath.Dialect.WEST_LONG
       },
       (params) => {
         if (isNaN(params[0])) {
@@ -439,14 +437,14 @@ export class StandardSymbols extends Symbols {
 
     // Maximum value
     this.addFunction({
-        'max': Dialect.WEST,
-        'maximum' : Dialect.WEST_LONG,
-        'макс' : Dialect.RUS,
-        'максимум' : Dialect.RUS_LONG
+        'max':      HumaneMath.Dialect.WEST,
+        'maximum':  HumaneMath.Dialect.WEST_LONG,
+        'макс':     HumaneMath.Dialect.RUS,
+        'максимум': HumaneMath.Dialect.RUS_LONG
       },
       (params) => {
         var result = params[0];
-        for ( var i = 1; i < params.length; i++) {
+        for (var i = 1; i < params.length; i++) {
           result = Math.max(result, params[i]);
         }
         return result;
@@ -456,14 +454,14 @@ export class StandardSymbols extends Symbols {
 
     // Minimum value
     this.addFunction({
-        'min': Dialect.WEST,
-        'minimum' : Dialect.WEST_LONG,
-        'мин' : Dialect.RUS,
-        'минимум' : Dialect.RUS_LONG
+        'min': HumaneMath.Dialect.WEST,
+        'minimum':  HumaneMath.Dialect.WEST_LONG,
+        'мин':  HumaneMath.Dialect.RUS,
+        'минимум':  HumaneMath.Dialect.RUS_LONG
       },
       (params) => {
         var result = params[0];
-        for ( var i = 1; i < params.length; i++) {
+        for (var i = 1; i < params.length; i++) {
           result = Math.min(result, params[i]);
         }
         return result;
@@ -473,8 +471,8 @@ export class StandardSymbols extends Symbols {
 
     // Condition
     this.addFunction({
-        'if': Dialect.WEST,
-        'если' : Dialect.RUS
+        'if': HumaneMath.Dialect.WEST,
+        'если':  HumaneMath.Dialect.RUS
       },
       (params) => {
         return params[0] > 0
@@ -491,23 +489,23 @@ export class StandardSymbols extends Symbols {
 
     // Constant equal to a circle's circumference divided by its diameter
     this.addConstant({
-      'pi' : Dialect.WEST,
-      'π'  : Dialect.GREEK,
-      'пи' : Dialect.RUS
+      'pi':  HumaneMath.Dialect.WEST,
+      'π':   HumaneMath.Dialect.GREEK,
+      'пи':  HumaneMath.Dialect.RUS
     }, Math.PI);
 
     // Euler's number
     this.addConstant({
-      'e' : Dialect.WEST,
-      'е' : Dialect.RUS
+      'e':  HumaneMath.Dialect.WEST,
+      'е':  HumaneMath.Dialect.RUS
     }, Math.E);
 
     // The golden ratio
     this.addConstant({
-      'phi' : Dialect.WEST,
-      'ph' : Dialect.MISC,
-      'φ'  : Dialect.GREEK,
-      'фи' : Dialect.RUS
+      'phi': HumaneMath.Dialect.WEST,
+      'ph':  HumaneMath.Dialect.MISC,
+      'φ':   HumaneMath.Dialect.GREEK,
+      'фи':  HumaneMath.Dialect.RUS
     }, 1.6180339887);
   }
 
@@ -517,17 +515,17 @@ export class StandardSymbols extends Symbols {
   addVariables() {
 
     this.addVariable('x', {
-      'х' : Dialect.RUS
+      'х': HumaneMath.Dialect.RUS
     });
 
     this.addVariable('y', {
-      'у' : Dialect.RUS
+      'у': HumaneMath.Dialect.RUS
     });
 
     this.addVariable('t', {});
 
     this.addVariable('a', {
-      'а' : Dialect.RUS
+      'а': HumaneMath.Dialect.RUS
     });
   }
 
@@ -537,9 +535,12 @@ export class StandardSymbols extends Symbols {
     // 42 — See
     // http://en.wikipedia.org/wiki/Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything
     this.addConstant({
-        'answer_to_the_ultimate_question_of_life_the_universe_and_everything': Dialect.WEST,
-        'ответ_на_главный_вопрос_жизни_вселенной_и_всего_такого' : Dialect.RUS
+        'answer_to_the_ultimate_question_of_life_the_universe_and_everything': HumaneMath.Dialect.WEST,
+        'ответ_на_главный_вопрос_жизни_вселенной_и_всего_такого':              HumaneMath.Dialect.RUS
       },
       42);
   }
 }
+
+HumaneMath.StandardSymbols = StandardSymbols;
+HumaneMath.symbols.STANDARD = new StandardSymbols();

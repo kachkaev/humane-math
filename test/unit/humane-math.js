@@ -3,8 +3,8 @@ import HumaneMath from '../../src/humane-math';
 describe('HumaneMath', () => {
   describe('Greet function', () => {
     beforeEach(() => {
-      //spy(HumaneMath, 'Message');
-      //HumaneMath.greet();
+      spy(HumaneMath, 'Message');
+      HumaneMath.Text();
     });
 
     it('should have been run once', () => {

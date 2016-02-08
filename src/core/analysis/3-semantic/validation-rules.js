@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import {ValidationRule}      from './validation-rule';
+import {ValidationRule} from './validation-rule';
 
 /**
  * ValidationRules are used by Validator to find errors
@@ -57,6 +57,8 @@ export class ValidationRules {
    *      Current object (OK for method chaining).
    */
   clone() {
-    return _.map(this, _.clone);
+    var result = new ValidationRules();
+    _.extend(result, _.map(this, _.clone));
+    return result;
   }
 }

@@ -1,6 +1,6 @@
 import _ from 'underscore';
-import * as removeMarkdown from 'remove-markdown';
-import {Message}      from '../analysis/message';
+import removeMarkdown from 'remove-markdown';
+import {Message} from '../analysis/message';
 
 export class Locale {
 

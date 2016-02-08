@@ -1,24 +1,23 @@
-import {TokenType} from '../core/analysis/1-lexical/token-type';
-import {config} from '../core/config/index';
+import {HumaneMath} from '../core/core';
 
-config.addLocale('en', {
+HumaneMath.addLocale('en', {
   tokenNames: {
-    [TokenType.RB_LEFT   ]: 'a left bracket',
-    [TokenType.RB_RIGHT  ]: 'a right bracket',
-    [TokenType.COMMA     ]: 'a comma',
-    [TokenType.EQUAL     ]: 'an equality sign',
-    [TokenType.LESS      ]: 'a “less than” sign',
-    [TokenType.MORE      ]: 'a “more than” sign',
-    [TokenType.LESS_EQUAL]: 'a “less than or equal” sign',
-    [TokenType.MORE_EQUAL]: 'a “more than or equal” sign',
-    [TokenType.ADD       ]: 'an addition sign',
-    [TokenType.SUBTRACT  ]: 'a subtraction sign',
-    [TokenType.MULTIPLY  ]: 'a multiplication sign',
-    [TokenType.DIVIDE    ]: 'a division sign',
-    [TokenType.POWER     ]: 'an exponentiation sign',
-    [TokenType.NUMBER    ]: 'a number',
-    [TokenType.SYMBOL    ]: 'a name of a variable or a function',
-    [TokenType.SEMICOLON ]: 'a semicolon'
+    [HumaneMath.TokenType.RB_LEFT   ]: 'a left bracket',
+    [HumaneMath.TokenType.RB_RIGHT  ]: 'a right bracket',
+    [HumaneMath.TokenType.COMMA     ]: 'a comma',
+    [HumaneMath.TokenType.EQUAL     ]: 'an equality sign',
+    [HumaneMath.TokenType.LESS      ]: 'a “less than” sign',
+    [HumaneMath.TokenType.MORE      ]: 'a “more than” sign',
+    [HumaneMath.TokenType.LESS_EQUAL]: 'a “less than or equal” sign',
+    [HumaneMath.TokenType.MORE_EQUAL]: 'a “more than or equal” sign',
+    [HumaneMath.TokenType.ADD       ]: 'an addition sign',
+    [HumaneMath.TokenType.SUBTRACT  ]: 'a subtraction sign',
+    [HumaneMath.TokenType.MULTIPLY  ]: 'a multiplication sign',
+    [HumaneMath.TokenType.DIVIDE    ]: 'a division sign',
+    [HumaneMath.TokenType.POWER     ]: 'an exponentiation sign',
+    [HumaneMath.TokenType.NUMBER    ]: 'a number',
+    [HumaneMath.TokenType.SYMBOL    ]: 'a name of a variable or a function',
+    [HumaneMath.TokenType.SEMICOLON ]: 'a semicolon'
   },
   messages: {
 
@@ -26,21 +25,21 @@ config.addLocale('en', {
     // Lexical errors
 
     // A token is passed to some errors
-    ['e_lex_' + TokenType.E_UNKNOWN           ]: (token) => `You cannot use symbol __${token.raw}__ in formulas.`,
-    ['e_lex_' + TokenType.E_NUMBER_MALFORMED  ]: 'Malformed number. A number can contain only one dot and the dot must be surrounded with digits, e.g. _“3.14”_.',
-    ['e_lex_' + TokenType.E_NUMBER_EXPONENTIAL]: 'It is not allowed to use an exponential form for numbers. Please, reformat it.',
-    ['e_lex_' + TokenType.E_VERTICAL_SLASH    ]: 'It is not allowed to use vertical slash in formulas. To calculate absolute values, please use function _abs(argument)_.',
-    ['e_lex_' + TokenType.E_STARSTAR          ]: 'It is not allowed to use __“**”__. To exponentiate a number, use _caret sign (“^”)_ or function _power(base, exponent)_.',
-    ['e_lex_' + TokenType.E_EQUALEQUAL        ]: 'It is not allowed to use __“==”__. Use a _single_ equality sign for comparison and assignments.',
-    ['e_lex_' + TokenType.E_MISPLACED_DOT     ]: 'The dot can be used only to separate digits in real numbers. For multiplication use _star sign (“*”)_.',
-    ['e_lex_' + TokenType.E_SB_LEFT           ]: 'Square brackets can not be used. Use a left round bracket instead.',
-    ['e_lex_' + TokenType.E_SB_RIGHT          ]: 'Square brackets can not be used. Use a right round bracket instead.',
-    ['e_lex_' + TokenType.E_CB_LEFT           ]: 'Curly brackets can not be used. Use a left round bracket instead.',
-    ['e_lex_' + TokenType.E_CB_RIGHT          ]: 'Curly brackets can not be used. Use a right round bracket instead.',
-    ['e_lex_' + TokenType.E_AB_LEFT           ]: 'Angle brackets can not be used. Use a left round bracket instead.',
-    ['e_lex_' + TokenType.E_AB_RIGHT          ]: 'Angle brackets can not be used. Use a right round bracket instead.',
-    ['e_lex_' + TokenType.E_BACK_SLASH        ]: 'Use of backslash is not allowed. To divide use _forward slash (“/”)_.',
-    ['e_lex_' + TokenType.E_REST              ]: 'The input string is too long and it can’t be read completely.',
+    ['e_lex_' + HumaneMath.TokenType.E_UNKNOWN           ]: (token) => `You cannot use symbol __${token.raw}__ in formulas.`,
+    ['e_lex_' + HumaneMath.TokenType.E_NUMBER_MALFORMED  ]: 'Malformed number. A number can contain only one dot and the dot must be surrounded with digits, e.g. _“3.14”_.',
+    ['e_lex_' + HumaneMath.TokenType.E_NUMBER_EXPONENTIAL]: 'It is not allowed to use an exponential form for numbers. Please, reformat it.',
+    ['e_lex_' + HumaneMath.TokenType.E_VERTICAL_SLASH    ]: 'It is not allowed to use vertical slash in formulas. To calculate absolute values, please use function _abs(argument)_.',
+    ['e_lex_' + HumaneMath.TokenType.E_STARSTAR          ]: 'It is not allowed to use __“**”__. To exponentiate a number, use _caret sign (“^”)_ or function _power(base, exponent)_.',
+    ['e_lex_' + HumaneMath.TokenType.E_EQUALEQUAL        ]: 'It is not allowed to use __“==”__. Use a _single_ equality sign for comparison and assignments.',
+    ['e_lex_' + HumaneMath.TokenType.E_MISPLACED_DOT     ]: 'The dot can be used only to separate digits in real numbers. For multiplication use _star sign (“*”)_.',
+    ['e_lex_' + HumaneMath.TokenType.E_SB_LEFT           ]: 'Square brackets can not be used. Use a left round bracket instead.',
+    ['e_lex_' + HumaneMath.TokenType.E_SB_RIGHT          ]: 'Square brackets can not be used. Use a right round bracket instead.',
+    ['e_lex_' + HumaneMath.TokenType.E_CB_LEFT           ]: 'Curly brackets can not be used. Use a left round bracket instead.',
+    ['e_lex_' + HumaneMath.TokenType.E_CB_RIGHT          ]: 'Curly brackets can not be used. Use a right round bracket instead.',
+    ['e_lex_' + HumaneMath.TokenType.E_AB_LEFT           ]: 'Angle brackets can not be used. Use a left round bracket instead.',
+    ['e_lex_' + HumaneMath.TokenType.E_AB_RIGHT          ]: 'Angle brackets can not be used. Use a right round bracket instead.',
+    ['e_lex_' + HumaneMath.TokenType.E_BACK_SLASH        ]: 'Use of backslash is not allowed. To divide use _forward slash (“/”)_.',
+    ['e_lex_' + HumaneMath.TokenType.E_REST              ]: 'The input string is too long and it can’t be read completely.',
 
     //################################
     // Syntax errors
@@ -119,4 +118,4 @@ config.addLocale('en', {
   }
 });
 
-config.currentLocale = 'en';
+HumaneMath.setLocale('en');

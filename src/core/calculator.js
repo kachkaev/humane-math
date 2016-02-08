@@ -1,10 +1,8 @@
 import _ from 'underscore';
-import {
-  TreeNodeType,
-  MathTokenType,
-  MathStandardSymbols,
-  Text
-} from 'humane-math';
+
+import TokenType    from './analysis/1-lexical/token-type';
+import TreeNodeType from './analysis/2-syntactic/tree-node-type';
+import Text         from './text';
 
 /**
  * Calculator can be used for extracting node values.
@@ -139,14 +137,14 @@ export class Calculator {
    *    A MathTreeNode to be calculated. Can be any type of node.
    * @param {Object} variables
    *    Variables passed.
-   * @param {Object} userSymbols
-   *    Set of user constants and functions. Not in use now.
+   * @param {Object} symbols
+   *    Set of constants and functions.
    * @param {boolean} calculateCacheMode
    *    If true, the result of the function will be saved as the node “value” property.
    * @returns {number|NaN}
    *      xxx
    */
-  calculateValueOfTheNode(treeNode, variables, userSymbols, calculateCacheMode) {
+  calculateValueOfTheNode(treeNode, variables, symbols, calculateCacheMode) {
 
     //FIXME revise
     //// Do nothing if the value is already calculated or this node is a number (it has already got a value).
@@ -169,8 +167,8 @@ export class Calculator {
 
     // If is a special case. No need to return NaN if any of the arguments is NaN.
     if (treeNode.type == TreeNodeType.FUNCTION
-        && MathStandardSymbols.functions[treeNode.id]
-        && MathStandardSymbols.functions[treeNode.id].calculateForNaNs) {
+        && symbols.functions[treeNode.id]
+        && symbols.functions[treeNode.id].calculateForNaNs) {
       failOnSubNodeNaN = false;
     }
 
@@ -185,7 +183,7 @@ export class Calculator {
             try {
               subNodesValues[i] = this.calculateValueOfTheNode(
                   treeNode.subNodes[i], variables,
-                  userSymbols, calculateCacheMode
+                  symbols, calculateCacheMode
                 );
             } catch (e) {
               if (e != this.COULD_NOT_CALCULATE_EXCEPTION) {
@@ -194,7 +192,7 @@ export class Calculator {
             }
           } else {
             subNodesValues[i] = this.calculateValueOfTheNode(
-                treeNode.subNodes[i], variables, userSymbols,
+                treeNode.subNodes[i], variables, symbols,
                 calculateCacheMode);
           }
         } else {
@@ -213,8 +211,8 @@ export class Calculator {
     // If the function cannot be simplified and now in calculate cache mode, return.
     if (calculateCacheMode
         && treeNode.type == TreeNodeType.FUNCTION
-        && typeof (MathStandardSymbols.functions[treeNode.id]) != 'undefined'
-        && MathStandardSymbols.functions[treeNode.id].nonSimplifiable) {
+        && typeof (symbols.functions[treeNode.id]) != 'undefined'
+        && symbols.functions[treeNode.id].nonSimplifiable) {
       return NaN;
     }
 
@@ -231,10 +229,10 @@ export class Calculator {
     case TreeNodeType.SYMBOL:
       // A symbol is a standard constant.
       if (treeNode.subType == TreeNodeType.STANDARD_CONSTANT) {
-        if (typeof (MathStandardSymbols.constants[treeNode.id]) == 'undefined') {
+        if (typeof (symbols.constants[treeNode.id]) == 'undefined') {
           return NaN;
         }
-        result = MathStandardSymbols.constants[treeNode.id].value;
+        result = symbols.constants[treeNode.id].value;
         break;
       }
 
@@ -252,10 +250,10 @@ export class Calculator {
 
       // A function is standard.
       if (treeNode.subType == TreeNodeType.STANDARD_FUNCTION) {
-        if (typeof (MathStandardSymbols.functions[treeNode.id]) != undefined) {
+        if (typeof (symbols.functions[treeNode.id]) != undefined) {
           return NaN;
         }
-        result = MathStandardSymbols.functions[treeNode.id].executor(subNodesValues);
+        result = symbols.functions[treeNode.id].executor(subNodesValues);
         break;
       }
       break;
@@ -265,7 +263,7 @@ export class Calculator {
     case TreeNodeType.EXPRESSION:
       result = subNodesValues[0];
       for (let i = 1; i < subNodesValuesCount; i++) {
-        if (treeNode.subActions[i - 1].type == MathTokenType.ADD) {
+        if (treeNode.subActions[i - 1].type == TokenType.ADD) {
           result += subNodesValues[i];
         } else {
           result -= subNodesValues[i];
@@ -278,7 +276,7 @@ export class Calculator {
     case TreeNodeType.TERM:
       result = subNodesValues[0];
       for (let i = 1; i < subNodesValuesCount; i++) {
-        if (treeNode.subActions[i - 1].type == MathTokenType.MULTIPLY) {
+        if (treeNode.subActions[i - 1].type == TokenType.MULTIPLY) {
           result *= subNodesValues[i];
         } else {
           result /= subNodesValues[i];
