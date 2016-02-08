@@ -83,8 +83,8 @@
         "_": true,
         "process": true
     },
-    envs: [
-        "browser"
-    ],
-
+    "env": {
+        "browser": true,
+        "node": true
+    }
 }
