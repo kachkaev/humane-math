@@ -1,6 +1,6 @@
 {
   "name": "humane-math",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Human-friendly parser and evaluator for mathematical expressions",
   "main": "dist/humane-math.js",
   "scripts": {
