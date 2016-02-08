@@ -66,5 +66,8 @@
   "babelBoilerplateOptions": {
     "entryFileName": "humane-math",
     "mainVarName": "HumaneMath"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3"
   }
 }
