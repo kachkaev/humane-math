@@ -1,5 +1,8 @@
 {
-  extends: "./setup/.globals.json",
+  "extends": [
+    "./setup/.globals.json",
+    "./../.eslintspellcheck"
+  ],
   "parser": "babel-eslint",
   "rules": {
     "strict": 0,

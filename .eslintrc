@@ -1,11 +1,13 @@
 {
     parser: "babel-eslint",
-    extends: "eslint:recommended",
+    extends: [
+      "eslint:recommended",
+      "./.eslintspellcheck"
+    ],
     ecmaFeatures: {
         "modules": true
     },
     plugins: [
-        "spellcheck",
         "cflint"
     ],
     rules: {
@@ -28,65 +30,6 @@
             }
         ],
         "cflint/no-substr": 2,
-        "spellcheck/spell-checker": [1,
-           {
-               "comments": "true",
-               "strings": "true",
-               "identifiers": "true",
-               "skipWords": [
-                   "asin","arcsine","acosine","tg",
-                   "lt","gt",
-                   "aff",
-                   "args",
-                   "bdd",
-                   "boolean",
-                   "cb",
-                   "chai", "Chai",
-                   "config", "Config",
-                   "concat",
-                   "dest",
-                   "dict",
-                   "dist",
-                   "dont",
-                   "dom", "Dom", "DOM",
-                   "eslint",
-                   "exponentiate",
-                   "fallthrough",
-                   "globals", "Globals",
-                   "http", "Http",
-                   "init",
-                   "jsdoc",
-                   "js", "json",
-                   "len",
-                   "lex",
-                   "ltrim",
-                   "md",
-                   "param", "params", "Params",
-                   "Ns",
-                   "precompute",
-                   "preferrable",
-                   "pos", "Pos",
-                   "rb",
-                   "rtrim",
-                   "sem",
-                   "sinon", "Sinon",
-                   "simplifiable", "Simplifiable",
-                   "subparse",
-                   "substring",
-                   "stderr",
-                   "src",
-                   "str",
-                   "tokenize", "Tokenize", "tokenized", "tokenizing",
-                   "validator", "Validator",
-                   "unescaped",
-                   "unparsed", "Unparsed",
-                   "utils"
-                ],
-                "skipIfMatch": [
-                    "http://[^s]*"
-                ]
-            }
-        ]
     },
     globals: {
     },
