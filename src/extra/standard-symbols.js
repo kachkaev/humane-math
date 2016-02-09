@@ -10,7 +10,8 @@ import {HumaneMath} from '../core/core';
 
 class StandardSymbols extends HumaneMath.Symbols {
 
-  construct() {
+  constructor() {
+    super();
     this.addTrigonometricFunctions();
     this.addInverseTrigonometricFunctions();
     this.addHyperbolicTrigonometricFunctions();

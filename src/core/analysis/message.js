@@ -13,7 +13,7 @@ export class Message {
    * @param {Object} params
    *    Additional parameters of the message that clarify its context.
    */
-  construct(type, pos, params = {}) {
+  constructor(type, pos, params = {}) {
     this._type = type;
     this._pos = pos;
     this._params = params;

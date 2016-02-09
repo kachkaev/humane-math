@@ -1,8 +1,8 @@
 import _ from 'underscore';
 
-import TokenType    from './analysis/1-lexical/token-type';
-import TreeNodeType from './analysis/2-syntactic/tree-node-type';
-import Text         from './text';
+import {TokenType}    from './analysis/1-lexical/token-type';
+import {TreeNodeType} from './analysis/2-syntactic/tree-node-type';
+import {Text}         from './text';
 
 /**
  * Calculator can be used for extracting node values.

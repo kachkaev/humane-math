@@ -17,7 +17,7 @@ export class Pos {
    * @param {int} length
    *    Length of an object
    */
-  construct(col, row, pos, length) {
+  constructor(col, row, pos, length) {
     this.col = col;
     this.row = row;
     this.pos = pos;
@@ -34,7 +34,7 @@ export class Pos {
    * @returns {Pos}
    *      new Pos object.
    */
-  unite(pos1, pos2) {
+  static unite(pos1, pos2) {
     return new Pos(
         pos1.col,
         pos1.row,
@@ -53,7 +53,7 @@ export class Pos {
    * @returns {Pos}
    *      new Pos object.
    */
-  between(pos1, pos2) {
+  static between(pos1, pos2) {
     return new Pos(
         pos1.col + pos1.len,
         pos1.row,
@@ -69,7 +69,7 @@ export class Pos {
    *
    * @returns {Pos}
    */
-  beginning(pos) {
+  static beginning(pos) {
     return new Pos(
         pos.col,
         pos.row,
@@ -85,7 +85,7 @@ export class Pos {
    *
    * @returns {Pos}
    */
-  ending(pos) {
+  static ending(pos) {
     return new Pos(
         pos.col + pos.len,
         pos.row,

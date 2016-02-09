@@ -1,8 +1,9 @@
 //import Signal from 'signals';
-import MessageList from './analysis/message-list';
-import TokenStream from './analysis/1-lexical/token-stream';
-import Tree        from './analysis/2-syntactic/tree';
-import Validator   from './analysis/3-semantic/validator';
+import {MessageList}     from './analysis/message-list';
+import {TokenStream}     from './analysis/1-lexical/token-stream';
+import {Tree}            from './analysis/2-syntactic/tree';
+import {Validator}       from './analysis/3-semantic/validator';
+import {ValidationRules} from './analysis/3-semantic/validation-rules';
 
 /**
  * Text is a main class used for keeping mathematical statements, expressions, etc.
@@ -13,13 +14,14 @@ export class Text {
    * @param {ValidationRules} validationRules
    * @param {string} [defaultContent='']
    */
-  construct(symbols, validationRules, defaultContent = '') {
+  constructor(symbols, validationRules, defaultContent = '') {
 
     this._tokenStream = new TokenStream();
     this._tree = new Tree();
     this._validator = new Validator();
 
-    this._validationRules = validationRules;
+    this._symbols = symbols;
+    this._validationRules = validationRules || new ValidationRules(); //XXX optimize
 
     this.errors = new MessageList();
     this.warnings = new MessageList();
@@ -64,6 +66,7 @@ export class Text {
     // Perform semantic analysis
     this._validator.validate(
       this._tree,
+      this._symbols,
       this._validationRules,
       !this._tokenStream.errors.isEmpty() || !this._tree.errors.isEmpty()
     );
@@ -86,6 +89,10 @@ export class Text {
    * @returns {boolean} True if anything was changed.
    */
   setValidationRules(validationRules) {
+    if (!validationRules) {
+      validationRules = new ValidationRules(); //XXX optimize
+    }
+
     if (this._validationRules == validationRules) {
       return false;
     }
@@ -93,7 +100,7 @@ export class Text {
     this._validationRules = validationRules;
 
     // Perform semantic analysis
-    if (!this._validator.validate(this._tree, this._validationRules)) {
+    if (!this._validator.validate(this._tree, this._symbols, this._validationRules)) {
       return false;
     }
 
