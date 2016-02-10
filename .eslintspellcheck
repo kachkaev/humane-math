@@ -17,6 +17,7 @@
                    "boolean",
                    "cb",
                    "chai", "Chai",
+                   "clonable",
                    "config", "Config",
                    "concat",
                    "dest",

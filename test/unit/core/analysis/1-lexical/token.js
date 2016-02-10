@@ -11,25 +11,44 @@ import HumaneMath    from '../../../../../src/humane-math';
 var testCasesThatAreCorrect = [
   {
     constructorArgs: [Token.TYPE_EOF, 0, 0, 0],
-    expectedLength: 0
+    expectedLength: 0,
+    expectedTypeAfterClone: Token.TYPE_EOF
   }, {
     constructorArgs: [Token.TYPE_EOF, 0, 0, 0],
-    expectedLength: 0
+    expectedLength: 0,
+    expectedTypeAfterClone: Token.TYPE_EOF
   }, {
-    constructorArgs: [Token.TYPE_RB_LEFT, 0, 0, 0, ''],
-    expectedLength: 0
+    constructorArgs: [Token.TYPE_E_STARSTAR, 0, 0, 0, '**'],
+    expectedLength: 2,
+    expectedTypeAfterClone: Token.TYPE_POWER
   }, {
-    constructorArgs: [Token.TYPE_RB_LEFT, 0, 0, 0, '('],
-    expectedLength: 1
+    constructorArgs: [Token.TYPE_E_SB_LEFT, 0, 0, 0, '['],
+    expectedLength: 1,
+    expectedTypeAfterClone: Token.TYPE_RB_LEFT
   }, {
-    constructorArgs: [Token.TYPE_SEMICOLON, 1, 2, 3, 'xx'],
-    expectedLength: 2
+    constructorArgs: [Token.TYPE_E_CB_RIGHT, 0, 0, 0, '}'],
+    expectedLength: 1,
+    expectedTypeAfterClone: Token.TYPE_RB_RIGHT
+  }, {
+    constructorArgs: [Token.TYPE_LESS_EQUAL, 1, 2, 3, '<='],
+    expectedLength: 2,
+    expectedTypeAfterClone: Token.TYPE_LESS_EQUAL
   }, {
     constructorArgs: [Token.TYPE_SYMBOL, 0, 0, 0, 'test', 'test'],
-    expectedLength: 4
+    expectedLength: 4,
+    expectedTypeAfterClone: Token.TYPE_SYMBOL
   }, {
     constructorArgs: [Token.TYPE_NUMBER, 0, 0, 0, '42', 42],
-    expectedLength: 2
+    expectedLength: 2,
+    expectedTypeAfterClone: Token.TYPE_NUMBER
+  }, {
+    constructorArgs: [Token.TYPE_E_NUMBER_MALFORMED, 0, 0, 0, '42.0.0'],
+    expectedLength: 6,
+    expectedTypeAfterClone: Token.TYPE_NUMBER
+  }, {
+    constructorArgs: [Token.TYPE_E_UNKNOWN, 0, 0, 0, '----------'],
+    expectedLength: 10,
+    expectedTypeAfterClone: Token.TYPE_E_UNKNOWN
   }
 ];
 
@@ -169,6 +188,31 @@ var testCasesForIsXXX = [
   }, {
     methodName: 'isRightBracket',
     applicableTypes: [Token.TYPE_RB_RIGHT, Token.TYPE_E_SB_RIGHT, Token.TYPE_E_CB_RIGHT, Token.TYPE_E_AB_RIGHT]
+  }, {
+    methodName: 'isNumber',
+    applicableTypes: [Token.TYPE_NUMBER, Token.TYPE_E_NUMBER_MALFORMED, Token.TYPE_E_NUMBER_EXPONENTIAL]
+  }, {
+    methodName: 'isSymbol',
+    applicableTypes: [Token.TYPE_SYMBOL]
+  }, {
+    methodName: 'isPowerSign',
+    applicableTypes: [Token.TYPE_POWER, Token.TYPE_E_STARSTAR]
+  }, {
+    methodName: 'isTermSign',
+    applicableTypes: [Token.TYPE_MULTIPLY, Token.TYPE_DIVIDE, Token.TYPE_E_MISPLACED_DOT, Token.TYPE_E_BACK_SLASH]
+  }, {
+    methodName: 'isExpressionSign',
+    applicableTypes: [Token.TYPE_ADD, Token.TYPE_SUBTRACT]
+  }, {
+    methodName: 'isMathOperator',
+    applicableTypes: [
+      Token.TYPE_POWER, Token.TYPE_E_STARSTAR,
+      Token.TYPE_MULTIPLY, Token.TYPE_DIVIDE, Token.TYPE_E_MISPLACED_DOT, Token.TYPE_E_BACK_SLASH,
+      Token.TYPE_ADD, Token.TYPE_SUBTRACT
+    ]
+  }, {
+    methodName: 'isStatementSign',
+    applicableTypes: [Token.TYPE_EQUAL, Token.TYPE_LESS, Token.TYPE_MORE, Token.TYPE_MORE_EQUAL, Token.TYPE_LESS_EQUAL, Token.TYPE_E_EQUALEQUAL]
   }
 ];
 
@@ -265,18 +309,22 @@ describe('Lexical analysis → Token', () => {
 
       var token1Hash = null;
       var token2Hash = null;
-      expect(
-          () => {
-            token1Hash = token1.getHash();
-            token2Hash = token2.getHash();
-          }, testCaseLabel
-        ).to.not.throw();
+      _.each(['initial', 'repetitive'],
+        (subCase) => {
+          var testSubCaseLabel = `${testCaseLabel}/${subCase}`;
+          expect(
+            () => {
+              token1Hash = token1.getHash();
+              token2Hash = token2.getHash();
+            }, testCaseLabel
+          ).to.not.throw();
 
-      if (testCase.expectedHashEquality) {
-        expect(token1Hash, testCaseLabel).equal(token2Hash);
-      } else {
-        expect(token1Hash, testCaseLabel).not.equal(token2Hash);
-      }
+          if (testCase.expectedHashEquality) {
+            expect(token1Hash, testSubCaseLabel).equal(token2Hash);
+          } else {
+            expect(token1Hash, testSubCaseLabel).not.equal(token2Hash);
+          }
+        });
     });
   });
 
@@ -338,6 +386,41 @@ describe('Lexical analysis → Token', () => {
         },caseLabel).to.not.throw();
         expect(result, caseLabel).equal(false);
       });
+    });
+  });
+
+  it('should be clonable for messages using cloneWithCorrectedType()', () => {
+    _.each(testCasesThatAreCorrect, (testCase, index) => {
+      var testCaseLabel = JSON.stringify(testCase.name) || ('case ' + index);
+      var token1 = null;
+      var token2 = null;
+      expect(
+          () => {
+            token1 = new Token(
+              testCase.constructorArgs[0],
+              testCase.constructorArgs[1],
+              testCase.constructorArgs[2],
+              testCase.constructorArgs[3],
+              testCase.constructorArgs[4],
+              testCase.constructorArgs[5]
+            );
+          }, testCaseLabel
+        ).to.not.throw();
+      expect(
+          () => {
+            token2 = token1.cloneWithCorrectedType();
+          }, testCaseLabel
+        ).to.not.throw();
+
+      expect(token1, testCaseLabel).not.equal(token2);
+      expect(token2, testCaseLabel).instanceOf(Token);
+      expect(token2.type, testCaseLabel).equal(testCase.expectedTypeAfterClone);
+      expect(token2.position.row, testCaseLabel).equal(testCase.constructorArgs[1]);
+      expect(token2.position.column, testCaseLabel).equal(testCase.constructorArgs[2]);
+      expect(token2.position.offset, testCaseLabel).equal(testCase.constructorArgs[3]);
+      expect(token2.position.length, testCaseLabel).equal(testCase.expectedLength);
+      expect(token2.text, testCaseLabel).equal(testCase.constructorArgs[4] || '');
+      // expect(token2.value, testCaseLabel).equal(testCase.constructorArgs[5]);
     });
   });
 });

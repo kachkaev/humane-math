@@ -203,6 +203,15 @@ export class Token {
   }
 
   /**
+   * Checks if a token is an expression sign (ADD or SUBTRACT)
+   *
+   * @returns {boolean}
+   */
+  isExpressionSign() {
+    return this.type == Token.TYPE_ADD || this.type == Token.TYPE_SUBTRACT;
+  }
+
+  /**
    * Checks if a token is a mathematical operator
    * (any of those that are used in parsing expressions, terms and powers).
    *
@@ -210,15 +219,6 @@ export class Token {
    */
   isMathOperator() {
     return this.isExpressionSign() || this.isTermSign() || this.isPowerSign();
-  }
-
-  /**
-   * Checks if a token is an expression sign (ADD or SUBTRACT)
-   *
-   * @returns {boolean}
-   */
-  isExpressionSign() {
-    return this.type == Token.TYPE_ADD || this.type == Token.TYPE_SUBTRACT;
   }
 
   /**
@@ -246,22 +246,29 @@ export class Token {
    * @example E_NUMBER_MALFORMED changes to NUMBER
    */
   cloneWithCorrectedType() {
-    var result = new Token();
-    _.extend(result, _.map(this, _.clone));
+    var type = this.type;
 
     // Substitution of a type for error tokens
-    if (result.isErrorToken()) {
-      if (result.isRightBracket()) {
-        result.type = Token.TYPE_RB_LEFT;
-      } else if (result.isLeftBracket()) {
-        result.type = Token.TYPE_LB_LEFT;
-      } else if (result.isNumber()) {
-        result.type = Token.TYPE_NUMBER;
-      } else if (result.isPowerSign()) {
-        result.type = Token.TYPE_POWER;
+    if (this.isErrorToken()) {
+      if (this.isRightBracket()) {
+        type = Token.TYPE_RB_RIGHT;
+      } else if (this.isLeftBracket()) {
+        type = Token.TYPE_RB_LEFT;
+      } else if (this.isNumber()) {
+        type = Token.TYPE_NUMBER;
+      } else if (this.isPowerSign()) {
+        type = Token.TYPE_POWER;
       }
     }
 
+    var result = new Token(
+        type,
+        this.position.row,
+        this.position.column,
+        this.position.offset,
+        type === Token.TYPE_EOF ? undefined : this.text,
+        (type === Token.TYPE_NUMBER && !this.value) ? 0 : this.value
+    );
     return result;
   }
 }
