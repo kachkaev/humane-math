@@ -163,7 +163,7 @@ function testBrowser() {
     }, null, function() {
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
-        var watcher = gulp.watch(watchFiles, ['lint']); // eslint-disable-line
+        var watcher = gulp.watch([watchFiles, testFiles], ['lint']); // eslint-disable-line
       } else {
         $.livereload.reload('./tmp/__spec-build.js');
       }
@@ -195,6 +195,9 @@ gulp.task('build', ['lint', 'clean'], build);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);
+
+// Only run our tests
+gulp.task('test-without-lint', test);
 
 // Set up coverage and run tests
 gulp.task('coverage', ['lint'], coverage);
