@@ -1,9 +1,9 @@
 import {HumaneMath} from '../core/core';
 
 HumaneMath.validationRules.ABSTRACT_FUNCTION = (new HumaneMath.ValidationRules())
-  .setRule('allowFunctions', HumaneMath.ValidationRule.YES)
-  .setRule('allowConstants', HumaneMath.ValidationRule.YES)
-  .setRule('acceptMathOperations', HumaneMath.ValidationRule.YES);
+    .setRule('allowFunctions', HumaneMath.ValidationRule.YES)
+    .setRule('allowConstants', HumaneMath.ValidationRule.YES)
+    .setRule('acceptMathOperations', HumaneMath.ValidationRule.YES);
 //  .setRule('allowConstants', HumaneMath.ValidationRule.ONLY, ['e'])
 //  .setRule('allowConstants', HumaneMath.ValidationRule.EXCLUDING, ['pi'])
 

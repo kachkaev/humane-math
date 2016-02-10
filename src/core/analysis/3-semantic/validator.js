@@ -1,8 +1,8 @@
 import _ from 'underscore';
 import {Message}      from '../message';
 import {MessageList}  from '../message-list';
-import {Pos}          from '../pos';
-import {TokenType}    from '../1-lexical/token-type';
+import {Position}     from '../position';
+import {Token}        from '../1-lexical/token';
 import {TreeNodeType} from '../2-syntactic/tree-node-type';
 
 /**
@@ -40,7 +40,7 @@ export class Validator {
 
     // Check for emptiness
     if (rules.acceptEmpty.isNo() && tree.root.isEmpty()) {
-      this.errors.add(new Message('e_sem_forbidden_empty', tree.root.pos));
+      this.errors.add(new Message('e_sem_forbidden_empty', tree.root.position));
     } else {
       // Recursively validate a tree
       this.validateNode(tree.root, symbols, rules);
@@ -59,7 +59,7 @@ export class Validator {
           && Math.round(tree.root.value) != tree.root.value) {
         this.errors.add(new Message(
             'e_sem_expected_int',
-            tree.root.pos,
+            tree.root.position,
             {value: tree.root.value}
           ));
 
@@ -67,7 +67,7 @@ export class Validator {
       } else if (rules.valueOnlyFinite.isYes() && !isFinite(tree.root.value)) {
         this.errors.add(new Message(
             'e_sem_expected_finite',
-            tree.root.pos,
+            tree.root.position,
             {value: tree.root.value}
           ));
       }
@@ -78,7 +78,7 @@ export class Validator {
           && (tree.root.value < rules.valueRange.min || tree.root.value > rules.valueRange.max)) {
         this.errors.add(new Message(
             'e_sem_expected_range',
-            tree.root.pos,
+            tree.root.position,
             {value: tree.root.value,range: rules.valueRange}
           ));
       }
@@ -90,7 +90,7 @@ export class Validator {
           && tree.root.value <= rules.valueOnlyGreaterThan.bound) {
         this.errors.add(new Message(
             'e_sem_expected_gt',
-            tree.root.pos,
+            tree.root.position,
             {value: tree.root.value, bound: rules.valueOnlyGreaterThan.bound}
           ));
       }
@@ -101,7 +101,7 @@ export class Validator {
           && tree.root.value >= rules.valueOnlyLessThan.bound) {
         this.errors.add(new Message(
             'e_sem_expected_lt',
-            tree.root.pos,
+            tree.root.position,
             {value: tree.root.value,bound: rules.valueOnlyLessThan.bound}
           ));
       }
@@ -148,12 +148,12 @@ export class Validator {
 
         // All constants are forbidden here.
         if (rules.allowConstants.isNo()) {
-          this.errors.add(new Message('e_sem_constant_forbidden_all', treeNode.pos, possibleMessageParams));
+          this.errors.add(new Message('e_sem_constant_forbidden_all', treeNode.position, possibleMessageParams));
 
         // This constant is forbidden here.
         } else if ((rules.allowConstants.isOnly() && _.indexOf(rules.allowConstants.list, symbolId) == -1)
             || (rules.allowConstants.isExcluding() && _.indexOf(rules.allowConstants.list, symbolId) !== -1)) {
-          this.errors.add(new Message('e_sem_constant_forbidden_this', treeNode.pos, possibleMessageParams));
+          this.errors.add(new Message('e_sem_constant_forbidden_this', treeNode.position, possibleMessageParams));
         }
 
         return;
@@ -177,12 +177,12 @@ export class Validator {
 
         // All variables are forbidden here.
         if (rules.allowVariables.isNo()) {
-          this.errors.add(new Message('e_sem_variable_forbidden_all', treeNode.pos, possibleMessageParams));
+          this.errors.add(new Message('e_sem_variable_forbidden_all', treeNode.position, possibleMessageParams));
 
         // This variable is forbidden here.
         } else if ((rules.allowVariables.isOnly() && _.indexOf(rules.allowVariables.list, symbolId) == -1)
             || (rules.allowVariables.isExcluding() && _.indexOf(rules.allowVariables.list, symbolId) !== -1)) {
-          this.errors.add(new Message('e_sem_variable_forbidden_this', treeNode.pos, possibleMessageParams));
+          this.errors.add(new Message('e_sem_variable_forbidden_this', treeNode.position, possibleMessageParams));
         }
         return;
       }
@@ -192,13 +192,13 @@ export class Validator {
       // Check a symbol in a list of standard functions
       symbolId = symbols.findFunction(treeNode.name);
       if (symbolId) {
-        this.errors.add(new Message('e_sem_function_as_symbol', treeNode.pos,{name: treeNode.nameRaw, id: symbolId}));
+        this.errors.add(new Message('e_sem_function_as_symbol', treeNode.position,{name: treeNode.nameRaw, id: symbolId}));
         return;
       }
 
       /////////////////////////////
       // Unknown symbol
-      this.errors.add(new Message('e_sem_unknown_symbol', treeNode.pos, {name: treeNode.nameRaw}));
+      this.errors.add(new Message('e_sem_unknown_symbol', treeNode.position, {name: treeNode.nameRaw}));
       return;
 
     /////////////////////////////
@@ -227,7 +227,7 @@ export class Validator {
         if (rules.allowFunctions.isNo()) {
           this.errors.add(new Message(
               'e_sem_function_forbidden_all',
-              treeNode.namePos,
+              treeNode.namePosition,
               possibleMessageParams
           ));
 
@@ -238,7 +238,7 @@ export class Validator {
                 && _.indexOf(rules.allowFunctions.list, symbolId) !== -1)) {
           this.errors.add(new Message(
               'e_sem_function_forbidden_this',
-              treeNode.namePos,
+              treeNode.namePosition,
               possibleMessageParams
             ));
         }
@@ -246,7 +246,7 @@ export class Validator {
         // Check argument count for the function.
         var argumentCount = symbols.functions[symbolId].argumentCount;
         var realArgumentCount = treeNode.subNodes.length;
-        var errorPos;
+        var errorPosition;
 
         possibleMessageParams = {
           name: treeNode.nameRaw,
@@ -258,30 +258,30 @@ export class Validator {
           // Passed too much arguments.
           if (realArgumentCount > argumentCount) {
             if (treeNode.subNodes[argumentCount - 1]) {
-              errorPos = Pos.unite(
-                  Pos.ending(treeNode.subNodes[argumentCount - 1].pos),
-                  Pos.ending(treeNode.argumentPos)
+              errorPosition = Position.unite(
+                  Position.ending(treeNode.subNodes[argumentCount - 1].position),
+                  Position.ending(treeNode.argumentPosition)
               );
             } else {
-              errorPos = treeNode.argumentPos;
+              errorPosition = treeNode.argumentPosition;
             }
             this.errors.add(new Message(
                 'e_sem_function_arguments_extra_exact',
-                errorPos,
+                errorPosition,
                 possibleMessageParams
               ));
 
           // Passed too few arguments.
           } else if (realArgumentCount < argumentCount) {
-            errorPos = realArgumentCount
-                  ? Pos.unite(Pos.ending(
-                      treeNode.subNodes[realArgumentCount - 1].pos),
-                      Pos.ending(treeNode.argumentPos)
+            errorPosition = realArgumentCount
+                  ? Position.unite(Position.ending(
+                      treeNode.subNodes[realArgumentCount - 1].position),
+                      Position.ending(treeNode.argumentPosition)
                     )
-                  : treeNode.argumentPos;
+                  : treeNode.argumentPosition;
             this.errors.add(new Message(
                 'e_sem_function_arguments_few_exact',
-                errorPos,
+                errorPosition,
                 possibleMessageParams
               ));
           }
@@ -292,15 +292,15 @@ export class Validator {
           if (argumentCount.max == Infinity) {
             // Passed too few arguments
             if (realArgumentCount < argumentCount.min) {
-              errorPos = realArgumentCount
-                  ? Pos.unite(
-                      Pos.ending(treeNode.subNodes[realArgumentCount - 1].pos),
-                      Pos.ending(treeNode.argumentPos)
+              errorPosition = realArgumentCount
+                  ? Position.unite(
+                      Position.ending(treeNode.subNodes[realArgumentCount - 1].position),
+                      Position.ending(treeNode.argumentPosition)
                     )
-                  : treeNode.argumentPos;
+                  : treeNode.argumentPosition;
               this.errors.add(new Message(
                   'e_sem_function_arguments_few_range_n_inf',
-                  errorPos,
+                  errorPosition,
                   possibleMessageParams
                 ));
             }
@@ -308,25 +308,25 @@ export class Validator {
           // -- Case 2.2: Both Upper bound and lower bound are numbers.
           } else {
             if (realArgumentCount < argumentCount.min) {
-              errorPos = realArgumentCount
-                  ? Pos.unite(
-                      Pos.ending(treeNode.subNodes[realArgumentCount - 1].pos),
-                      Pos.ending(treeNode.argumentPos)
+              errorPosition = realArgumentCount
+                  ? Position.unite(
+                      Position.ending(treeNode.subNodes[realArgumentCount - 1].position),
+                      Position.ending(treeNode.argumentPosition)
                     )
-                  : treeNode.argumentPos;
+                  : treeNode.argumentPosition;
               this.errors.add(new Message(
                   'e_sem_function_arguments_few_range_n_n',
-                  errorPos,
+                  errorPosition,
                   possibleMessageParams
                 ));
             } if (realArgumentCount > argumentCount.max) {
-              errorPos = Pos.unite(
-                  Pos.ending(treeNode.subNodes[argumentCount.max - 1].pos),
-                  Pos.ending(treeNode.argumentPos)
+              errorPosition = Position.unite(
+                  Position.ending(treeNode.subNodes[argumentCount.max - 1].position),
+                  Position.ending(treeNode.argumentPosition)
                 );
               this.errors.add(new Message(
                   'e_sem_function_arguments_extra_range_n_n',
-                  errorPos,
+                  errorPosition,
                   possibleMessageParams
                 ));
             }
@@ -342,7 +342,7 @@ export class Validator {
       if (symbolId) {
         this.errors.add(new Message(
             'e_sem_constant_as_function',
-            treeNode.namePos,
+            treeNode.namePosition,
             {name: treeNode.nameRaw, id: symbolId}
           ));
         return;
@@ -354,7 +354,7 @@ export class Validator {
       if (symbolId) {
         this.errors.add(new Message(
             'e_sem_variable_as_function',
-            treeNode.namePos,
+            treeNode.namePosition,
             {name: treeNode.nameRaw, id: symbolId}
           ));
         return;
@@ -364,7 +364,7 @@ export class Validator {
       // Unknown function
       this.errors.add(new Message(
           'e_sem_unknown_function',
-          treeNode.namePos,
+          treeNode.namePosition,
           {name: treeNode.nameRaw}
         ));
       return;
@@ -374,9 +374,9 @@ export class Validator {
     /////////////////////////////
     case TreeNodeType.STATEMENT:
       if (treeNode.subType == TreeNodeType.STATEMENT_EQUATION && rules.acceptEquations.isNo()) {
-        this.errors.add(new Message('e_sem_forbidden_equation', treeNode.subActions[0].pos));
+        this.errors.add(new Message('e_sem_forbidden_equation', treeNode.subActions[0].position));
       } else if (treeNode.subType == TreeNodeType.STATEMENT_INEQUALITY && rules.acceptInequalities.isNo()) {
-        this.errors.add(new Message('e_sem_forbidden_inequality', treeNode.subActions[0].pos));
+        this.errors.add(new Message('e_sem_forbidden_inequality', treeNode.subActions[0].position));
       }
 
       this.validateSubNodes(treeNode, symbols, rules);
@@ -386,16 +386,16 @@ export class Validator {
     // Sequence of statements
     /////////////////////////////
     case TreeNodeType.SEQUENCE_OF_STATEMENTS:
-      if (rules.acceptSequenceOfStatements.isNo() && treeNode.subActions[0].type == TokenType.SEMICOLON) {
+      if (rules.acceptSequenceOfStatements.isNo() && treeNode.subActions[0].type == Token.TYPE_SEMICOLON) {
         if (treeNode.subNodes.length == 1) {
           this.errors.add(new Message(
               'e_sem_forbidden_semicolon',
-              treeNode.subActions[0].pos
+              treeNode.subActions[0].position
             ));
         } else {
           this.errors.add(new Message(
               'e_sem_forbidden_sequence_of_statements',
-              treeNode.subActions[0].pos
+              treeNode.subActions[0].position
             ));
         }
       }

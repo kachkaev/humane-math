@@ -1,42 +1,121 @@
 import _ from 'underscore';
-import {Pos}       from '../pos';
-import {TokenType} from './token-type';
+import {Position} from '../position';
 
 export class Token {
+
+  // Acceptable tokens
+  static TYPE_EOF = 1; // end of string
+  static TYPE_RB_LEFT = 2; // (
+  static TYPE_RB_RIGHT = 3; // )
+  static TYPE_COMMA = 4;
+  static TYPE_EQUAL = 11;
+  static TYPE_LESS = 12;
+  static TYPE_MORE = 13;
+  static TYPE_LESS_EQUAL = 14;
+  static TYPE_MORE_EQUAL = 15;
+  static TYPE_ADD = 21;
+  static TYPE_SUBTRACT = 22;
+  static TYPE_MULTIPLY = 23;
+  static TYPE_DIVIDE = 24;
+  static TYPE_POWER = 25;
+  static TYPE_NUMBER = 31;
+  static TYPE_SYMBOL = 32;
+  static TYPE_SEMICOLON = 33;
+
+  // Tokens that point to an error
+  static TYPE_E_UNKNOWN = 128;            // Unknown sequence of symbols (undefined error)
+  static TYPE_E_NUMBER_MALFORMED = 129;   // Malformed number
+  static TYPE_E_NUMBER_EXPONENTIAL = 130; // Number in exponential notation.
+  static TYPE_E_VERTICAL_SLASH = 131;     // Attempt to use a vertical slash to get an absolute value
+  static TYPE_E_STARSTAR = 132;           // Attempt to use ** for power instead of ^
+  static TYPE_E_EQUALEQUAL = 133;         // Attempt to use == for power instead of =
+  static TYPE_E_MISPLACED_DOT = 134;      // Misplaced dot (without a number)
+  static TYPE_E_SB_LEFT = 140;            // Left square bracket
+  static TYPE_E_SB_RIGHT = 141;           // Right square bracket
+  static TYPE_E_CB_LEFT = 142;            // Right square bracket
+  static TYPE_E_CB_RIGHT = 143;           // Right square bracket
+  static TYPE_E_AB_LEFT = 144;            // Right angle bracket
+  static TYPE_E_AB_RIGHT = 145;           // Right angle bracket
+  static TYPE_E_BACK_SLASH = 146;         // Use of back slash instead of a regular slash
+
+  // The rest of the input string that was not converted to tokens
+  // (used when a stream contains more than MAX_TOKEN_COUNT)
+  static TYPE_E_REST = 150;
+
   /**
-   * Creates a single token for use in the MathTokenStream
+   * Creates a single token for its later use inside HumaneMath.TokenStream.
    *
    * @param {number} type
-   *    Type of a token
-   * @param {number} col
-   *    Position — Column
-   * @param {number} row
-   *    Position — Row
-   * @param {number} pos
-   *    Absolute Position
-   * @param {string} raw
-   *    Raw (unchanged) data
-   * @param {Numeric} value
-   *    (Optional) Value (calculated data) for some token types
+   *        Type of the token, one of Token.TYPE_*
+   * @param {int} row
+   *        Horizontal position in original text, zero-based
+   * @param {int} column
+   *        Vertical position in original text, zero-based
+   * @param {int} offset
+   *        Absolute offset from the beginning of the original text, zero-based
+   * @param {string} [text]
+   *        Raw token text
+   * @param {number|string} [value]
+   *        Numeric value or a normalized name of a symbol
+   *
+   * @throws {string}
+   *         When arguments are invalid.
    */
-  constructor(type, col, row, pos, raw, value) {
-    this.type = type;
-    if (!_.isUndefined(raw)) {
-      this.pos = new Pos(col, row, pos, raw.length);
-      this.raw = raw;
+  constructor(type, row, column, offset, text, value) {
+    if (!_.isNumber(type) || type < 0 || type > 150) {
+      throw `Token type must be defined correctly, ${type} given. See Token.TYPE_*.`;
     }
-    if (!_.isUndefined(value)) {
+    this.type = type;
+
+    // text
+    if (type === Token.TYPE_EOF) {
+      if (!_.isUndefined(text)) {
+        throw `Token text must be undefined for a token of TYPE_EOF, ${text} given.`;
+      }
+      this.text = '';
+    } else {
+      if (!_.isString(text)) {
+        throw `Token text must be a string, ${text} given.`;
+      }
+      this.text = text;
+    }
+
+    // position
+    this.position = new Position(row, column, offset, this.text.length);
+
+    // value
+    if (type === Token.TYPE_SYMBOL) {
+      if (!_.isString(value)) {
+        throw `Token value must be a string for a token of TYPE_SYMBOL, ${value} given.`;
+      }
       this.value = value;
+    } else if (type === Token.TYPE_NUMBER) {
+      if (!_.isNumber(value)) {
+        throw `Token value must be a number for a token of TYPE_NUMBER, ${value} given.`;
+      }
+      this.value = value;
+    } else if (!_.isUndefined(value)) {
+      throw `Token value must not be provided for any token type except TYPE_SYMBOL and TYPE_NUMBER, ${value} given.`;
     }
   }
 
   /**
-   * Returns a string digest of a token. This can be useful when calculating hash of a TokenStream.
+   * Returns a string digest of the token. This can be useful
+   * when calculating hash of a TokenStream.
+   *
+   * The hash does not include the text, but does include the value if present.
    *
    * @returns {string}
    */
   getHash() {
-    return `${this.type}|${this.pos.pos}|${this.pos.row}|${(_.isUndefined(this.value) ? '' : this.value)}$`;
+    if (_.isUndefined(this._cachedHash)) {
+      var hashParts = [this.type, this.position.row, this.position.column, this.position.offset];
+      if (!_.isUndefined(this.value)) {
+        hashParts.push(this.value);
+      }
+      this._cachedHash = hashParts.join('|');
+    }
+    return this._cachedHash;
   }
 
   /**
@@ -45,7 +124,7 @@ export class Token {
    * @returns {boolean}
    */
   isEOF() {
-    return this.type == TokenType.EOF;
+    return this.type == Token.TYPE_EOF;
   }
 
   /**
@@ -54,7 +133,7 @@ export class Token {
    * @returns {boolean}
    */
   isErrorToken() {
-    return this.type >= TokenType.E_UNKNOWN;
+    return this.type >= Token.TYPE_E_UNKNOWN;
   }
 
   /**
@@ -63,10 +142,10 @@ export class Token {
    * @returns {boolean}
    */
   isLeftBracket() {
-    return this.type == TokenType.RB_LEFT
-        || this.type == TokenType.E_SB_LEFT
-        || this.type == TokenType.E_CB_LEFT
-        || this.type == TokenType.E_AB_LEFT;
+    return this.type == Token.TYPE_RB_LEFT
+        || this.type == Token.TYPE_E_SB_LEFT
+        || this.type == Token.TYPE_E_CB_LEFT
+        || this.type == Token.TYPE_E_AB_LEFT;
   }
 
   /**
@@ -75,10 +154,10 @@ export class Token {
    * @returns {boolean}
    */
   isRightBracket() {
-    return this.type == TokenType.RB_RIGHT
-        || this.type == TokenType.E_SB_RIGHT
-        || this.type == TokenType.E_CB_RIGHT
-        || this.type == TokenType.E_AB_RIGHT;
+    return this.type == Token.TYPE_RB_RIGHT
+        || this.type == Token.TYPE_E_SB_RIGHT
+        || this.type == Token.TYPE_E_CB_RIGHT
+        || this.type == Token.TYPE_E_AB_RIGHT;
   }
 
   /**
@@ -87,9 +166,9 @@ export class Token {
    * @returns {boolean}
    */
   isNumber() {
-    return this.type == TokenType.NUMBER
-        || this.type == TokenType.E_NUMBER_MALFORMED
-        || this.type == TokenType.E_NUMBER_EXPONENTIAL;
+    return this.type == Token.TYPE_NUMBER
+        || this.type == Token.TYPE_E_NUMBER_MALFORMED
+        || this.type == Token.TYPE_E_NUMBER_EXPONENTIAL;
   }
 
   /**
@@ -98,7 +177,7 @@ export class Token {
    * @returns {boolean}
    */
   isSymbol() {
-    return this.type == TokenType.SYMBOL;
+    return this.type == Token.TYPE_SYMBOL;
   }
 
   /**
@@ -107,8 +186,8 @@ export class Token {
    * @returns {boolean}
    */
   isPowerSign() {
-    return this.type == TokenType.POWER
-        || this.type == TokenType.E_STARSTAR;
+    return this.type == Token.TYPE_POWER
+        || this.type == Token.TYPE_E_STARSTAR;
   }
 
   /**
@@ -117,10 +196,10 @@ export class Token {
    * @returns {boolean}
    */
   isTermSign() {
-    return this.type == TokenType.MULTIPLY
-        || this.type == TokenType.DIVIDE
-        || this.type == TokenType.E_MISPLACED_DOT
-        || this.type == TokenType.E_BACK_SLASH;
+    return this.type == Token.TYPE_MULTIPLY
+        || this.type == Token.TYPE_DIVIDE
+        || this.type == Token.TYPE_E_MISPLACED_DOT
+        || this.type == Token.TYPE_E_BACK_SLASH;
   }
 
   /**
@@ -139,7 +218,7 @@ export class Token {
    * @returns {boolean}
    */
   isExpressionSign() {
-    return this.type == TokenType.ADD || this.type == TokenType.SUBTRACT;
+    return this.type == Token.TYPE_ADD || this.type == Token.TYPE_SUBTRACT;
   }
 
   /**
@@ -149,39 +228,40 @@ export class Token {
    * @returns {boolean}
    */
   isStatementSign() {
-    return this.type == TokenType.EQUAL
-      || this.type == TokenType.LESS
-      || this.type == TokenType.MORE
-      || this.type == TokenType.MORE_EQUAL
-      || this.type == TokenType.LESS_EQUAL
-      || this.type == TokenType.E_EQUALEQUAL;
+    return this.type == Token.TYPE_EQUAL
+      || this.type == Token.TYPE_LESS
+      || this.type == Token.TYPE_MORE
+      || this.type == Token.TYPE_MORE_EQUAL
+      || this.type == Token.TYPE_LESS_EQUAL
+      || this.type == Token.TYPE_E_EQUALEQUAL;
   }
 
   /**
    * Makes a shallow copy of a token object with the type changed to the correct
-   * one in case it is an special error token. This is useful for passing data to
-   * language templates in order to avoid redundancy in them.
+   * one in case it is an special error token. This is useful for passing data
+   * to language templates in order to avoid the redundancy.
    *
    * @returns {boolean}
    *
    * @example E_NUMBER_MALFORMED changes to NUMBER
    */
   cloneWithCorrectedType() {
-    var clone = _.clone(this);
+    var result = new Token();
+    _.extend(result, _.map(this, _.clone));
 
     // Substitution of a type for error tokens
-    if (clone.isErrorToken()) {
-      if (clone.isRightBracket()) {
-        clone.type = TokenType.RB_LEFT;
-      } else if (clone.isLeftBracket()) {
-        clone.type = TokenType.LB_LEFT;
-      } else if (clone.isNumber()) {
-        clone.type = TokenType.NUMBER;
-      } else if (clone.isPowerSign()) {
-        clone.type = TokenType.POWER;
+    if (result.isErrorToken()) {
+      if (result.isRightBracket()) {
+        result.type = Token.TYPE_RB_LEFT;
+      } else if (result.isLeftBracket()) {
+        result.type = Token.TYPE_LB_LEFT;
+      } else if (result.isNumber()) {
+        result.type = Token.TYPE_NUMBER;
+      } else if (result.isPowerSign()) {
+        result.type = Token.TYPE_POWER;
       }
     }
 
-    return clone;
+    return result;
   }
 }

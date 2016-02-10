@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-import {TokenType}    from './analysis/1-lexical/token-type';
+import {Token}        from './analysis/1-lexical/token';
 import {TreeNodeType} from './analysis/2-syntactic/tree-node-type';
 import {Text}         from './text';
 
@@ -263,7 +263,7 @@ export class Calculator {
     case TreeNodeType.EXPRESSION:
       result = subNodesValues[0];
       for (let i = 1; i < subNodesValuesCount; i++) {
-        if (treeNode.subActions[i - 1].type == TokenType.ADD) {
+        if (treeNode.subActions[i - 1].type == Token.TYPE_ADD) {
           result += subNodesValues[i];
         } else {
           result -= subNodesValues[i];
@@ -276,7 +276,7 @@ export class Calculator {
     case TreeNodeType.TERM:
       result = subNodesValues[0];
       for (let i = 1; i < subNodesValuesCount; i++) {
-        if (treeNode.subActions[i - 1].type == TokenType.MULTIPLY) {
+        if (treeNode.subActions[i - 1].type == Token.TYPE_MULTIPLY) {
           result *= subNodesValues[i];
         } else {
           result /= subNodesValues[i];

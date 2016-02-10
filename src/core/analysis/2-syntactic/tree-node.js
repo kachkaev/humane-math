@@ -21,7 +21,7 @@ export class TreeNode {
   }
 
   /**
-   * Checks if the node is unparsed
+   * Checks if the node is unparsed.
    *
    * @returns {boolean}
    */

@@ -1,8 +1,7 @@
 import {Message}     from './analysis/message';
 import {MessageList} from './analysis/message-list';
-import {Pos}         from './analysis/pos';
+import {Position}         from './analysis/position';
 
-import {TokenType}   from './analysis/1-lexical/token-type';
 import {Token}       from './analysis/1-lexical/token';
 import {TokenStream} from './analysis/1-lexical/token-stream';
 
@@ -24,9 +23,8 @@ import {Calculator} from './calculator';
 var HumaneMath = {
   Message,
   MessageList,
-  Pos,
+  Position,
 
-  TokenType,
   Token,
   TokenStream,
 

@@ -1,0 +1,37 @@
+import _ from 'underscore';
+import HumaneMath from '../../../src/humane-math';
+
+var contentSets = {
+  '': {},
+  '42': {},
+  'default text': {}
+};
+
+describe('Text', () => {
+  it('should not be initializable without default arguments', () => {
+    let text = new HumaneMath.Text();
+    expect(text).to.be.instanceOf(HumaneMath.Text);
+  });
+
+  it('should be initializable with string as a first argument', () => {
+    _.each(contentSets, function(features, content) {
+      let text = new HumaneMath.Text(content);
+      expect(text).to.be.instanceOf(HumaneMath.Text);
+      expect(text.getContent()).equal(content);
+    });
+  });
+
+  // it('should be initializable with string as a first argument', () => {
+  //   let text = new HumaneMath.Text('default text');
+  //   expect(text).to.be.instanceOf(HumaneMath.Text);
+  //   expect(text.getContent()).is.equal.to('default text');
+  // });
+  //
+  // it(`should work`, () => {
+  //   var text = new HumaneMath.Text(HumaneMath.symbols.STANDARD, HumaneMath.validationRules.ABSTRACT_FUNCTION);
+  //   expect(text).to.be.instanceOf(HumaneMath.Text);
+  //
+  //   //console.log(HumaneMath.Text, text);
+  //   //expect(text).to.include.keys('setContent');
+  // });
+});

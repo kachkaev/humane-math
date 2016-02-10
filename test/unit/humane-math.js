@@ -4,9 +4,8 @@ import HumaneMath from '../../src/humane-math';
 var listOfRequiredClassNames = [
   'Message',
   'MessageList',
-  'Pos',
+  'Position',
 
-  'TokenType',
   'Token',
   'TokenStream',
 
@@ -37,28 +36,24 @@ var listOfRequiredMethodNames = [
   'setLocale'
 ];
 
-describe('HumaneMath', () => {
-  describe('Structure', () => {
-    it(`should have all required classes (${listOfRequiredClassNames.join(', ')})`, () => {
-      _.each(listOfRequiredClassNames, function(requiredClassName) {
-        expect(HumaneMath[requiredClassName], requiredClassName).not.to.be.undefined;
-        var obj = new HumaneMath[requiredClassName];
-        expect(obj, requiredClassName).to.be.an.instanceOf(HumaneMath[requiredClassName]);
-      });
+describe('HumaneMath (container)', () => {
+  it(`should have all required classes (${listOfRequiredClassNames.join(', ')})`, () => {
+    _.each(listOfRequiredClassNames, function(requiredClassName) {
+      expect(HumaneMath[requiredClassName], requiredClassName).to.be.an.instanceOf(Object);
     });
+  });
 
-    it(`should have all required objects (${listOfRequiredObjectNames.join(', ')})`, () => {
-      _.each(listOfRequiredObjectNames, function(requiredObjectName) {
-        expect(HumaneMath[requiredObjectName], requiredObjectName).not.to.be.undefined;
-        expect(HumaneMath[requiredObjectName], requiredObjectName).to.be.an.instanceOf(Object);
-      });
+  it(`should have all required objects (${listOfRequiredObjectNames.join(', ')})`, () => {
+    _.each(listOfRequiredObjectNames, function(requiredObjectName) {
+      expect(HumaneMath[requiredObjectName], requiredObjectName).not.to.be.undefined;
+      expect(HumaneMath[requiredObjectName], requiredObjectName).to.be.an.instanceOf(Object);
     });
+  });
 
-    it(`should have all required methods (${listOfRequiredMethodNames.join(', ')})`, () => {
-      _.each(listOfRequiredMethodNames, function(requiredMethodName) {
-        expect(HumaneMath[requiredMethodName], requiredMethodName).not.to.be.undefined;
-        expect(HumaneMath[requiredMethodName], requiredMethodName).to.be.an.instanceOf(Function);
-      });
+  it(`should have all required methods (${listOfRequiredMethodNames.join(', ')})`, () => {
+    _.each(listOfRequiredMethodNames, function(requiredMethodName) {
+      expect(HumaneMath[requiredMethodName], requiredMethodName).not.to.be.undefined;
+      expect(HumaneMath[requiredMethodName], requiredMethodName).to.be.an.instanceOf(Function);
     });
   });
 });

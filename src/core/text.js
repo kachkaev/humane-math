@@ -1,9 +1,11 @@
 //import Signal from 'signals';
+import _ from 'underscore';
 import {MessageList}     from './analysis/message-list';
 import {TokenStream}     from './analysis/1-lexical/token-stream';
 import {Tree}            from './analysis/2-syntactic/tree';
 import {Validator}       from './analysis/3-semantic/validator';
 import {ValidationRules} from './analysis/3-semantic/validation-rules';
+//import {Symbols}         from './config/symbols';
 
 /**
  * Text is a main class used for keeping mathematical statements, expressions, etc.
@@ -16,17 +18,14 @@ export class Text {
    */
   constructor(symbols, validationRules, defaultContent = '') {
 
-    this._tokenStream = new TokenStream();
-    this._tree = new Tree();
-    this._validator = new Validator();
+    this.setSymbols(symbols);
+    this.setValidationRules(validationRules);
 
-    this._symbols = symbols;
-    this._validationRules = validationRules || new ValidationRules(); //XXX optimize
+    this._tokenStream = new TokenStream();
+    this._tree = new Tree(); this._validator = new Validator();
 
     this.errors = new MessageList();
     this.warnings = new MessageList();
-    this.hasErrors = false;
-    this.hasWarnings = false;
 
     //this.changed = new Signal();
 
@@ -44,14 +43,19 @@ export class Text {
    */
   setContent(newContent = '') {
 
-    // var time_start = new Date().getTime();
-
     // Basic check on changes
-    if (this.content === newContent) {
+    if (this._content === newContent) {
       return false;
     }
 
-    this.content = newContent;
+    // var messages = new MessageList();
+    // var tokenStream = lexer.process(text, messages);
+    // var tree = parser.process(tokenStream, messages);
+    //
+    // var validatorMessages = new MessageList();
+    // validator.process(tree, this.getSymbols(), this.getValidationRules(), validatorMessages);
+
+    this._content = newContent;
 
     // Perform lexical analysis
     if (!this._tokenStream.tokenize(newContent)) {
@@ -81,25 +85,49 @@ export class Text {
     return true;
   }
 
+  getContent() {
+    return this._content;
+  }
+
+  // setSymbols(symbols) {
+  //
+  // }
+
   /**
    * Re-validates the math object according to new validation rule set.
    *
-   * @param {Object} validationRules
+   * @param {ValidationRules} validationRules
    *
    * @returns {boolean} True if anything was changed.
    */
   setValidationRules(validationRules) {
-    if (!validationRules) {
-      validationRules = new ValidationRules(); //XXX optimize
+    if (validationRules instanceof ValidationRules) {
+      throw `Validation rules are expected to be an instance of HumaneMath.ValidationRules, ${ValidationRules} given`;
     }
 
-    if (this._validationRules == validationRules) {
+    if (this._validationRules === validationRules) {
+      return false;
+    }
+    this._validationRules = validationRules;
+
+    // Do not revalidate if the method is called from the constructor
+    if (_.isUndefined(this._content)) {
       return false;
     }
 
-    this._validationRules = validationRules;
+    return this._revalidate();
+  }
+  //XXX remove or restore
+  // dump() {
+  //   return `text: "${this._content}", errors: ${this.errors.count()} (${this._tokenStream.errors.count()}, ${this._tree.errors.count()}, ${this._validator.errors.count()})`;
+  // //    + ' Warnings: ' + this.warnings.count()
+  // //        + '(' + this._tokenStream.warnings.count() + ', '
+  // //            + this._tree.warnings.count()    + ', '
+  // //            + this._validator.warnings.count()   + ')'
+  //     ;
+  // }
 
-    // Perform semantic analysis
+  _revalidate() {
     if (!this._validator.validate(this._tree, this._symbols, this._validationRules)) {
       return false;
     }
@@ -114,13 +142,4 @@ export class Text {
     //this.changed.dispatch();
     return true;
   }
-  //XXX remove or restore
-  // dump() {
-  //   return `text: "${this.content}", errors: ${this.errors.count()} (${this._tokenStream.errors.count()}, ${this._tree.errors.count()}, ${this._validator.errors.count()})`;
-  // //    + ' Warnings: ' + this.warnings.count()
-  // //        + '(' + this._tokenStream.warnings.count() + ', '
-  // //            + this._tree.warnings.count()    + ', '
-  // //            + this._validator.warnings.count()   + ')'
-  //     ;
-  // }
 }

@@ -1,8 +1,7 @@
 import _ from 'underscore';
 import {Message}      from '../message';
 import {MessageList}  from '../message-list';
-import {Pos}          from '../pos';
-import {TokenType}    from '../1-lexical/token-type';
+import {Position}     from '../position';
 import {Token}        from '../1-lexical/token';
 import {TreeNodeType} from './tree-node-type';
 import {TreeNode}     from './tree-node';
@@ -60,7 +59,7 @@ export class Tree {
     this.root = this.subparseStatementSequence();
 
     // Check if an end of Token Stream was reached.
-    if (this.tokenStream.currentToken().type != TokenType.EOF) {
+    if (this.tokenStream.currentToken().type != Token.TYPE_EOF) {
       this.errors.add(new Message(
         'e_syn_unknown',
         this.tokenStream.currentToken().pos
@@ -95,14 +94,14 @@ export class Tree {
     // Run till EOF to get all possible errors and statements
     while (!this.tokenStream.currentToken().isEOF()) {
       // If The statement separator is semicolon (or a comma, which is an error)
-      if (this.tokenStream.currentToken().type == TokenType.SEMICOLON
-          || this.tokenStream.currentToken().type == TokenType.COMMA) {
+      if (this.tokenStream.currentToken().type == Token.TYPE_SEMICOLON
+          || this.tokenStream.currentToken().type == Token.TYPE_COMMA) {
 
         // Add sub-action (semicolon or comma position must be kept)
         currentNode.subActions.push(this.tokenStream.currentToken());
 
         // If a separator is a comma, report an error
-        if (this.tokenStream.currentToken().type == TokenType.COMMA) {
+        if (this.tokenStream.currentToken().type == Token.TYPE_COMMA) {
           this.errors.add(new Message(
               'e_syn_statements_comma',
               this.tokenStream.currentToken().pos
@@ -135,7 +134,7 @@ export class Tree {
         }
 
         // Skip to the next SEMICOLON or to the end of the stream or to the last token
-        if (!this.tokenStream.findNextToken([TokenType.SEMICOLON], true)) {
+        if (!this.tokenStream.findNextToken([Token.TYPE_SEMICOLON], true)) {
           this.tokenStream.lastToken(true);
         } else {
           // Add sub-action (semicolon position must be kept)
@@ -155,7 +154,7 @@ export class Tree {
         currentSubNode.type = TreeNodeType.E_UNPARSED;
         currentSubNode.hasErrors = true;
 
-        currentSubNode.pos = Pos.unite(currentSubNode.pos, this.tokenStream.currentToken().pos);
+        currentSubNode.pos = Position.unite(currentSubNode.pos, this.tokenStream.currentToken().pos);
         if (this.tokenStream.currentToken() != this.tokenStream.lastToken()) {
           this.tokenStream.nextToken(true);
         }
@@ -181,7 +180,7 @@ export class Tree {
     }
 
     // Get the position of the current node
-    currentNode.pos = Pos.unite(
+    currentNode.pos = Position.unite(
         firstNodeToken.pos,
         this.tokenStream.currentToken().pos
       );
@@ -243,10 +242,10 @@ export class Tree {
 
       switch (statementSign.type) {
       // The statement is an inequality
-      case TokenType.LESS:
-      case TokenType.MORE:
-      case TokenType.LESS_EQUAL:
-      case TokenType.MORE_EQUAL:
+      case Token.TYPE_LESS:
+      case Token.TYPE_MORE:
+      case Token.TYPE_LESS_EQUAL:
+      case Token.TYPE_MORE_EQUAL:
         currentNode.subType = TreeNodeType.STATEMENT_INEQUALITY;
         break;
 
@@ -274,7 +273,7 @@ export class Tree {
         currentNode.subNodes.push(this.subparseExpression());
       }
 
-      currentNode.pos = Pos.unite(firstNodeToken.pos, this.tokenStream
+      currentNode.pos = Position.unite(firstNodeToken.pos, this.tokenStream
           .previousToken().pos);
       return currentNode;
 
@@ -341,7 +340,7 @@ export class Tree {
     // Work out case SUBTRACT term.
     // Replace first empty sub-node with number (0)
     if (currentNode.subNodes[0].isEmpty()) {
-      if (currentNode.subActions[0].type == TokenType.SUBTRACT) {
+      if (currentNode.subActions[0].type == Token.TYPE_SUBTRACT) {
         currentNode.subNodes[0].type = TreeNodeType.NUMBER;
         currentNode.subNodes[0].value = 0;
       } else {
@@ -350,7 +349,7 @@ export class Tree {
     }
 
     // Get the position of the current node
-    currentNode.pos = Pos.unite(
+    currentNode.pos = Position.unite(
         firstNodeToken.pos,
         this.tokenStream.previousToken().pos
       );
@@ -414,7 +413,7 @@ export class Tree {
           if (!(this.tokenStream.previousToken().isErrorToken() && !this.tokenStream.previousToken().isMathOperator())
               || this.tokenStream.previousToken().isNumber()) {
             this.errors.add(new Message('e_syn_missing_multiply',
-                Pos.between(
+                Position.between(
                   this.tokenStream.previousToken().pos,
                   this.tokenStream.currentToken().pos), {
                     previousToken: this.tokenStream
@@ -426,8 +425,8 @@ export class Tree {
           }
         }
 
-        var pseudoMultiplyToken = new Token(TokenType.MULTIPLY);
-        pseudoMultiplyToken.pos = Pos.between(
+        var pseudoMultiplyToken = new Token(Token.TYPE_MULTIPLY);
+        pseudoMultiplyToken.pos = Position.between(
             this.tokenStream.previousToken().pos,
             this.tokenStream.currentToken().pos
           );
@@ -460,7 +459,7 @@ export class Tree {
     });
 
     // Get the position of the current node
-    currentNode.pos = Pos.unite(
+    currentNode.pos = Position.unite(
       firstNodeToken.pos,
       this.tokenStream.previousToken().pos
     );
@@ -513,7 +512,7 @@ export class Tree {
     });
 
     // Get the position of the current node
-    currentNode.pos = Pos.unite(
+    currentNode.pos = Position.unite(
         firstNodeToken.pos,
         this.tokenStream.previousToken().pos
       );
@@ -547,7 +546,7 @@ export class Tree {
       return currentNode;
 
     // Factor is a function or a symbol
-    } else if (firstNodeToken.type == TokenType.SYMBOL) {
+    } else if (firstNodeToken.type == Token.TYPE_SYMBOL) {
 
       // Check for a left bracket after the symbol
       if (this.tokenStream.nextToken().isLeftBracket()) {
@@ -558,14 +557,14 @@ export class Tree {
 
         currentNode.type = TreeNodeType.FUNCTION;
         currentNode.name = this.tokenStream.currentToken().value;
-        currentNode.namePos = this.tokenStream.currentToken().pos;
+        currentNode.namePosition = this.tokenStream.currentToken().pos;
         currentNode.nameRaw = this.tokenStream.currentToken().raw;
         currentNode.subNodes = [];
 
         // Skip over a left bracket and remember the position
         // of the beginning of the arguments
         this.tokenStream.nextToken(true);
-        currentNode.argumentPos = Pos.ending(
+        currentNode.argumentPosition = Position.ending(
             this.tokenStream.currentToken().pos
           );
         this.tokenStream.nextToken(true);
@@ -577,14 +576,14 @@ export class Tree {
           // Case one: Function has no arguments
 
           // Get the position of the current node
-          currentNode.pos = Pos.unite(
+          currentNode.pos = Position.unite(
               firstNodeToken.pos,
               this.tokenStream.currentToken().pos
             );
 
           // Update the position of the arguments
-          currentNode.argumentPos = Pos.between(
-              currentNode.argumentPos,
+          currentNode.argumentPosition = Position.between(
+              currentNode.argumentPosition,
               this.tokenStream.currentToken().pos
             );
 
@@ -609,11 +608,11 @@ export class Tree {
             currentNode.subNodes.push(currentArgument);
 
             if (this.tokenStream.currentToken().isRightBracket()
-                || this.tokenStream.currentToken().type == TokenType.COMMA
-                || this.tokenStream.currentToken().type == TokenType.SEMICOLON) {
+                || this.tokenStream.currentToken().type == Token.TYPE_COMMA
+                || this.tokenStream.currentToken().type == Token.TYPE_SEMICOLON) {
               // Check if an argument is empty and add an error if so
               if (currentArgument.type == TreeNodeType.EMPTY) {
-                currentArgument.pos = Pos.between(
+                currentArgument.pos = Position.between(
                     this.tokenStream.previousToken().pos,
                     this.tokenStream.currentToken().pos
                   );
@@ -628,14 +627,14 @@ export class Tree {
             // Check for a right bracket
             if (this.tokenStream.currentToken().isRightBracket()) {
               // Get the position of the current node
-              currentNode.pos = Pos.unite(
+              currentNode.pos = Position.unite(
                   firstNodeToken.pos,
                   this.tokenStream.currentToken().pos
                 );
 
               // Update the position of the arguments
-              currentNode.argumentPos = Pos.between(
-                  currentNode.argumentPos,
+              currentNode.argumentPosition = Position.between(
+                  currentNode.argumentPosition,
                   this.tokenStream.currentToken().pos
                 );
 
@@ -645,10 +644,10 @@ export class Tree {
             }
 
             // Right bracket not found – check for a comma or a semicolon
-            if (this.tokenStream.currentToken().type == TokenType.COMMA
-                || this.tokenStream.currentToken().type == TokenType.SEMICOLON) {
+            if (this.tokenStream.currentToken().type == Token.TYPE_COMMA
+                || this.tokenStream.currentToken().type == Token.TYPE_SEMICOLON) {
               // It is an error if it is a semicolon
-              if (this.tokenStream.currentToken().type == TokenType.SEMICOLON) {
+              if (this.tokenStream.currentToken().type == Token.TYPE_SEMICOLON) {
                 this.errors.add(new Message(
                     'e_syn_function_argument_semicolon',
                     this.tokenStream.currentToken().pos
@@ -689,26 +688,26 @@ export class Tree {
             // Look for the stop-symbol (next right bracket of the
             // same level or a comma) to continue parsing after it
             var stopSymbol = this.tokenStream.findNextTokenAtTheSameLevel([
-              TokenType.RB_RIGHT,
-              TokenType.E_SB_RIGHT,
-              TokenType.COMMA,
-              TokenType.SEMICOLON
+              Token.TYPE_RB_RIGHT,
+              Token.TYPE_E_SB_RIGHT,
+              Token.TYPE_COMMA,
+              Token.TYPE_SEMICOLON
             ], true);
 
             // A stop symbol was found
             if (stopSymbol) {
-              currentArgument.pos = Pos.unite(
+              currentArgument.pos = Position.unite(
                   currentArgument.pos,
                   this.tokenStream.previousToken().pos
                 );
 
               // Continue if a stop-symbol is comma
-              if (stopSymbol.type == TokenType.COMMA) {
+              if (stopSymbol.type == Token.TYPE_COMMA) {
                 // Skip a comma
                 this.tokenStream.nextToken(true);
                 continue;
               }
-              currentNode.pos = Pos.unite(
+              currentNode.pos = Position.unite(
                   firstNodeToken.pos,
                   this.tokenStream.currentToken().pos
                 );
@@ -717,20 +716,20 @@ export class Tree {
             // A stop symbol was not found – move to the end of the TokenStream
             } else {
               this.tokenStream.lastToken(true);
-              currentNode.pos = Pos.unite(
+              currentNode.pos = Position.unite(
                   firstNodeToken.pos,
                   this.tokenStream.lastToken().pos
                 );
               this.errors.add(new Message(
                   'e_syn_missing_rb',
-                  Pos.ending(this.tokenStream.currentToken().pos)
+                  Position.ending(this.tokenStream.currentToken().pos)
                 ));
               this.tokenStream.nextToken(true);
             }
 
             // Update the position of the arguments
-            currentNode.argumentPos = Pos.between(
-                currentNode.argumentPos,
+            currentNode.argumentPosition = Position.between(
+                currentNode.argumentPosition,
                 this.tokenStream.previousToken().pos
               );
             return currentNode;
@@ -769,7 +768,7 @@ export class Tree {
         if (currentNode.type == TreeNodeType.EMPTY && !currentNode.brackets) {
           this.errors.add(new Message(
               'e_syn_brackets_empty',
-              Pos.unite(
+              Position.unite(
                   this.tokenStream.previousToken().pos,
                   this.tokenStream.currentToken().pos
                 )
@@ -797,7 +796,7 @@ export class Tree {
 
         if (!this.tokenStream.currentToken().isErrorToken()
             && !this.tokenStream.currentToken().isEOF()
-            && this.tokenStream.currentToken().type != TokenType.SEMICOLON) {
+            && this.tokenStream.currentToken().type != Token.TYPE_SEMICOLON) {
           this.errors.add(new Message(
             'e_syn_brackets_wrong_symbol',
             this.tokenStream.currentToken().pos,
@@ -808,41 +807,41 @@ export class Tree {
         // Look for a stop-symbol (next right bracket of the same level)
         // to continue parsing after it
         let stopSymbol = this.tokenStream.findNextTokenAtTheSameLevel([
-          TokenType.RB_RIGHT,
-          TokenType.E_SB_RIGHT,
-          TokenType.SEMICOLON
+          Token.TYPE_RB_RIGHT,
+          Token.TYPE_E_SB_RIGHT,
+          Token.TYPE_SEMICOLON
         ], true);
 
         // Stop-symbol was found
         if (stopSymbol) {
           // A bracket was found
           if (stopSymbol.isRightBracket()) {
-            currentNode.pos = Pos.unite(
+            currentNode.pos = Position.unite(
                 firstNodeToken.pos,
                 this.tokenStream.currentToken().pos
               );
             this.tokenStream.nextToken(true);
           // A SEMICOLON was found
           } else {
-            currentNode.pos = Pos.unite(
+            currentNode.pos = Position.unite(
                 firstNodeToken.pos,
                 this.tokenStream.previousToken().pos
               );
             this.errors.add(
               new Message('e_syn_missing_rb',
-              Pos.ending(currentNode.pos)
+              Position.ending(currentNode.pos)
             ));
           }
         // A bracket was not found – move to the end of the TokenStream
         } else {
           this.tokenStream.lastToken(true);
-          currentNode.pos = Pos.unite(
+          currentNode.pos = Position.unite(
               firstNodeToken.pos,
               this.tokenStream.lastToken().pos
             );
           this.errors.add(new Message(
               'e_syn_missing_rb',
-              Pos.ending(currentNode.pos)
+              Position.ending(currentNode.pos)
             ));
           this.tokenStream.nextToken(true);
         }
@@ -867,7 +866,7 @@ export class Tree {
           )) {
         this.tokenStream.nextToken(true);
       }
-      currentNode.pos = Pos.unite(
+      currentNode.pos = Position.unite(
           firstNodeToken.pos,
           this.tokenStream.currentToken().pos
         );
@@ -887,12 +886,12 @@ export class Tree {
     /** @type TreeNode */
     var result = new TreeNode();
     if (this.tokenStream.currentToken() == this.tokenStream.firstToken()) {
-      result.pos = Pos.between(
-          new Pos(0, 0, 0, 0),
+      result.pos = Position.between(
+          new Position(0, 0, 0, 0),
           this.tokenStream.currentToken().pos
         );
     } else {
-      result.pos = Pos.between(
+      result.pos = Position.between(
           this.tokenStream.previousToken().pos,
           this.tokenStream.currentToken().pos
         );
@@ -919,14 +918,14 @@ export class Tree {
         nextToken = this.tokenStream.nextToken();
 
         // Case an operator appears at the beginning of something (except SUBTRACTION sign)
-        if (currentToken.type != TokenType.SUBTRACT
+        if (currentToken.type != Token.TYPE_SUBTRACT
             && (!previousToken || !(previousToken.isMathOperator()
                 || previousToken.isRightBracket()
                 || previousToken.isNumber() || previousToken
                 .isSymbol()))) {
           this.errors.add(new Message(
               'e_syn_missing_operand_at_begin',
-              Pos.beginning(this.tokenStream.currentToken().pos),
+              Position.beginning(this.tokenStream.currentToken().pos),
               {currentToken: currentToken}
             ));
         }
@@ -936,7 +935,7 @@ export class Tree {
             && !nextToken.isErrorToken()) {
           this.errors.add(new Message(
               'e_syn_missing_operand',
-              Pos.between(currentToken.pos, nextToken.pos), {
+              Position.between(currentToken.pos, nextToken.pos), {
                 previousToken: currentToken,
                 currentToken: nextToken
               }
@@ -948,10 +947,10 @@ export class Tree {
             || !(nextToken.isMathOperator() || nextToken.isNumber()
                 || nextToken.isSymbol() || nextToken
                 .isLeftBracket())
-            && nextToken.type !== TokenType.E_REST) {
+            && nextToken.type !== Token.TYPE_E_REST) {
           this.errors.add(new Message(
               'e_syn_missing_operand_at_end',
-              Pos.between(currentToken.pos, nextToken.pos), {
+              Position.between(currentToken.pos, nextToken.pos), {
                 currentToken: currentToken
               }
             ));

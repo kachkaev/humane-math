@@ -9,79 +9,79 @@
 if (!Lang.db.math_token_name)
 	Lang.db.math_token_name = {};
 
-Lang.db.math_token_name[MathTokenType.RB_LEFT] = "открывающаяся скобка";
-Lang.db.math_token_name[MathTokenType.RB_RIGHT] = "закрывающаяся скобка";
-Lang.db.math_token_name[MathTokenType.COMMA] = "запятая";
-Lang.db.math_token_name[MathTokenType.EQUAL] = "знак равенства";
-Lang.db.math_token_name[MathTokenType.LESS] = "знак «меньше»";
-Lang.db.math_token_name[MathTokenType.MORE] = "знак «больше»";
-Lang.db.math_token_name[MathTokenType.LESS_EQUAL] = "знак «меньше либо равно»";
-Lang.db.math_token_name[MathTokenType.MORE_EQUAL] = "знак «больше либо равно»";
-Lang.db.math_token_name[MathTokenType.ADD] = "плюс";
-Lang.db.math_token_name[MathTokenType.SUBTRACT] = "минус";
-Lang.db.math_token_name[MathTokenType.MULTIPLY] = "знак «умножить»";
-Lang.db.math_token_name[MathTokenType.DIVIDE] = "знак «разделить»";
-Lang.db.math_token_name[MathTokenType.POWER] = "знак возведения в степень";
-Lang.db.math_token_name[MathTokenType.NUMBER] = "число";
-Lang.db.math_token_name[MathTokenType.SYMBOL] = "имя переменной, константы или функции";
-Lang.db.math_token_name[MathTokenType.SEMICOLON] = "точка с запятой";
+Lang.db.math_token_name[MathToken.TYPE_RB_LEFT] = "открывающаяся скобка";
+Lang.db.math_token_name[MathToken.TYPE_RB_RIGHT] = "закрывающаяся скобка";
+Lang.db.math_token_name[MathToken.TYPE_COMMA] = "запятая";
+Lang.db.math_token_name[MathToken.TYPE_EQUAL] = "знак равенства";
+Lang.db.math_token_name[MathToken.TYPE_LESS] = "знак «меньше»";
+Lang.db.math_token_name[MathToken.TYPE_MORE] = "знак «больше»";
+Lang.db.math_token_name[MathToken.TYPE_LESS_EQUAL] = "знак «меньше либо равно»";
+Lang.db.math_token_name[MathToken.TYPE_MORE_EQUAL] = "знак «больше либо равно»";
+Lang.db.math_token_name[MathToken.TYPE_ADD] = "плюс";
+Lang.db.math_token_name[MathToken.TYPE_SUBTRACT] = "минус";
+Lang.db.math_token_name[MathToken.TYPE_MULTIPLY] = "знак «умножить»";
+Lang.db.math_token_name[MathToken.TYPE_DIVIDE] = "знак «разделить»";
+Lang.db.math_token_name[MathToken.TYPE_POWER] = "знак возведения в степень";
+Lang.db.math_token_name[MathToken.TYPE_NUMBER] = "число";
+Lang.db.math_token_name[MathToken.TYPE_SYMBOL] = "имя переменной, константы или функции";
+Lang.db.math_token_name[MathToken.TYPE_SEMICOLON] = "точка с запятой";
 
 // Родительный падеж
 Lang.db.math_token_name_rod_p = {};
-Lang.db.math_token_name_rod_p[MathTokenType.RB_LEFT] = "открывающейся скобки";
-Lang.db.math_token_name_rod_p[MathTokenType.RB_RIGHT] = "закрывающейся скобки";
-Lang.db.math_token_name_rod_p[MathTokenType.COMMA] = "запятой";
-Lang.db.math_token_name_rod_p[MathTokenType.EQUAL] = "знака равенства";
-Lang.db.math_token_name_rod_p[MathTokenType.LESS] = "знака «меньше»";
-Lang.db.math_token_name_rod_p[MathTokenType.MORE] = "знака «больше»";
-Lang.db.math_token_name_rod_p[MathTokenType.LESS_EQUAL] = "знака «меньше либо равно»";
-Lang.db.math_token_name_rod_p[MathTokenType.MORE_EQUAL] = "знака «больше либо равно»";
-Lang.db.math_token_name_rod_p[MathTokenType.ADD] = "плюса";
-Lang.db.math_token_name_rod_p[MathTokenType.SUBTRACT] = "минуса";
-Lang.db.math_token_name_rod_p[MathTokenType.MULTIPLY] = "знака «умножить»";
-Lang.db.math_token_name_rod_p[MathTokenType.DIVIDE] = "знака «разделить»";
-Lang.db.math_token_name_rod_p[MathTokenType.POWER] = "знака возведения в степень";
-Lang.db.math_token_name_rod_p[MathTokenType.NUMBER] = "числа";
-Lang.db.math_token_name_rod_p[MathTokenType.SYMBOL] = "имени переменной, константы или функции";
-Lang.db.math_token_name_rod_p[MathTokenType.SEMICOLON] = "точки с запятой";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_RB_LEFT] = "открывающейся скобки";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_RB_RIGHT] = "закрывающейся скобки";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_COMMA] = "запятой";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_EQUAL] = "знака равенства";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_LESS] = "знака «меньше»";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_MORE] = "знака «больше»";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_LESS_EQUAL] = "знака «меньше либо равно»";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_MORE_EQUAL] = "знака «больше либо равно»";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_ADD] = "плюса";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_SUBTRACT] = "минуса";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_MULTIPLY] = "знака «умножить»";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_DIVIDE] = "знака «разделить»";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_POWER] = "знака возведения в степень";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_NUMBER] = "числа";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_SYMBOL] = "имени переменной, константы или функции";
+Lang.db.math_token_name_rod_p[MathToken.TYPE_SEMICOLON] = "точки с запятой";
 
 // Винительный падеж
 Lang.db.math_token_name_vin_p = {};
-Lang.db.math_token_name_vin_p[MathTokenType.RB_LEFT] = "открывающуюся скобку";
-Lang.db.math_token_name_vin_p[MathTokenType.RB_RIGHT] = "закрывающуюся скобку";
-Lang.db.math_token_name_vin_p[MathTokenType.COMMA] = "запятую";
-Lang.db.math_token_name_vin_p[MathTokenType.EQUAL] = "знак равенства";
-Lang.db.math_token_name_vin_p[MathTokenType.LESS] = "знак «меньше»";
-Lang.db.math_token_name_vin_p[MathTokenType.MORE] = "знак «больше»";
-Lang.db.math_token_name_vin_p[MathTokenType.LESS_EQUAL] = "знак «меньше либо равно»";
-Lang.db.math_token_name_vin_p[MathTokenType.MORE_EQUAL] = "знак «больше либо равно»";
-Lang.db.math_token_name_vin_p[MathTokenType.ADD] = "плюс";
-Lang.db.math_token_name_vin_p[MathTokenType.SUBTRACT] = "минус";
-Lang.db.math_token_name_vin_p[MathTokenType.MULTIPLY] = "знак «умножить»";
-Lang.db.math_token_name_vin_p[MathTokenType.DIVIDE] = "знак «разделить»";
-Lang.db.math_token_name_vin_p[MathTokenType.POWER] = "знак возведения в степень";
-Lang.db.math_token_name_vin_p[MathTokenType.NUMBER] = "число";
-Lang.db.math_token_name_vin_p[MathTokenType.SYMBOL] = "имя переменной, константы или функции";
-Lang.db.math_token_name_vin_p[MathTokenType.SEMICOLON] = "точку с запятой";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_RB_LEFT] = "открывающуюся скобку";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_RB_RIGHT] = "закрывающуюся скобку";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_COMMA] = "запятую";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_EQUAL] = "знак равенства";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_LESS] = "знак «меньше»";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_MORE] = "знак «больше»";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_LESS_EQUAL] = "знак «меньше либо равно»";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_MORE_EQUAL] = "знак «больше либо равно»";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_ADD] = "плюс";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_SUBTRACT] = "минус";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_MULTIPLY] = "знак «умножить»";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_DIVIDE] = "знак «разделить»";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_POWER] = "знак возведения в степень";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_NUMBER] = "число";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_SYMBOL] = "имя переменной, константы или функции";
+Lang.db.math_token_name_vin_p[MathToken.TYPE_SEMICOLON] = "точку с запятой";
 
 // Творительный падеж
 Lang.db.math_token_name_tvor_p = {};
-Lang.db.math_token_name_tvor_p[MathTokenType.RB_LEFT] = "открывающейся скобкой";
-Lang.db.math_token_name_tvor_p[MathTokenType.RB_RIGHT] = "закрывающейся скобкой";
-Lang.db.math_token_name_tvor_p[MathTokenType.COMMA] = "запятой";
-Lang.db.math_token_name_tvor_p[MathTokenType.EQUAL] = "знаком равенства";
-Lang.db.math_token_name_tvor_p[MathTokenType.LESS] = "знаком «меньше»";
-Lang.db.math_token_name_tvor_p[MathTokenType.MORE] = "знаком «больше»";
-Lang.db.math_token_name_tvor_p[MathTokenType.LESS_EQUAL] = "знаком «меньше либо равно»";
-Lang.db.math_token_name_tvor_p[MathTokenType.MORE_EQUAL] = "знаком «больше либо равно»";
-Lang.db.math_token_name_tvor_p[MathTokenType.ADD] = "плюсом";
-Lang.db.math_token_name_tvor_p[MathTokenType.SUBTRACT] = "минусом";
-Lang.db.math_token_name_tvor_p[MathTokenType.MULTIPLY] = "знаком «умножить»";
-Lang.db.math_token_name_tvor_p[MathTokenType.DIVIDE] = "знаком «разделить»";
-Lang.db.math_token_name_tvor_p[MathTokenType.POWER] = "знаком возведения в степень";
-Lang.db.math_token_name_tvor_p[MathTokenType.NUMBER] = "числом";
-Lang.db.math_token_name_tvor_p[MathTokenType.SYMBOL] = "именем переменной, константы или функции";
-Lang.db.math_token_name_tvor_p[MathTokenType.SEMICOLON] = "точкой с запятой";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_RB_LEFT] = "открывающейся скобкой";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_RB_RIGHT] = "закрывающейся скобкой";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_COMMA] = "запятой";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_EQUAL] = "знаком равенства";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_LESS] = "знаком «меньше»";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_MORE] = "знаком «больше»";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_LESS_EQUAL] = "знаком «меньше либо равно»";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_MORE_EQUAL] = "знаком «больше либо равно»";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_ADD] = "плюсом";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_SUBTRACT] = "минусом";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_MULTIPLY] = "знаком «умножить»";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_DIVIDE] = "знаком «разделить»";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_POWER] = "знаком возведения в степень";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_NUMBER] = "числом";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_SYMBOL] = "именем переменной, константы или функции";
+Lang.db.math_token_name_tvor_p[MathToken.TYPE_SEMICOLON] = "точкой с запятой";
 
 //################################
 // Math Messages
@@ -93,21 +93,21 @@ if (!Lang.db.math_message)
 // Lexical errors
 
 // A token is passed to some errors (arguments[0])
-Lang.db.math_message["e_lex_" + MathTokenType.E_UNKNOWN] = function(){return "Встретился запрещённый знак «" + arguments[0].raw + "».";};
-Lang.db.math_message["e_lex_" + MathTokenType.E_NUMBER_MALFORMED] = "Число записано неверно. В нём может содержаться максимум один разделитель (точка), цифры должны быть по обеим сторонам точки, например <em>3.14</em>.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_NUMBER_EXPONENTIAL] = "Запрещено записывать числа в экспоненциальной форме. Следует перезаписать число.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_VERTICAL_SLASH] = "Вертикальную черту использовать запрещено. Для взятия модуля от числа существует функция <em>abs(аргумент)</em>.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_STARSTAR] = "Форма записи <b>«**»</b> запрещена. Чтобы возводить аргумент в степень, используйте символ «каретка» <em>(“^”)</em> или функцию <em>power(аргумент, степень)</em>.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_EQUALEQUAL] = " Запрещено записывать два знака равенства подряд. Используйте <em>один</em> знак равенства для сравнений и присвоений.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_MISPLACED_DOT] = "Точка может использоваться только для разделения целой и дробной части в числах. Здесь она лишняя.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_SB_LEFT] = "Запрещено использовать квадратные скобки. Поставьте открывающуюся круглую скобку.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_SB_RIGHT] = "Запрещено использовать квадратные скобки. Поставьте закрывающуюся круглую скобку.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_CB_LEFT] = "Запрещено использовать фигурные скобки. Поставьте открывающуюся круглую скобку.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_CB_RIGHT] = "Запрещено использовать фигурные скобки. Поставьте закрывающуюся круглую скобку.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_AB_LEFT] = "Запрещено использовать угловые скобки. Поставьте открывающуюся круглую скобку.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_AB_RIGHT] = "Запрещено использовать угловые скобки. Поставьте закрывающуюся круглую скобку.";
-Lang.db.math_message["e_lex_" + MathTokenType.E_BACK_SLASH] = "Запрещено использовать обратную косую черту. Для операции деления используйте <em>прямую косую черту</em> ( / ).";
-Lang.db.math_message["e_lex_" + MathTokenType.E_REST] = "Введённая строка содержит слишком много символов, и была разобрана не полностью.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_UNKNOWN] = function(){return "Встретился запрещённый знак «" + arguments[0].raw + "».";};
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_NUMBER_MALFORMED] = "Число записано неверно. В нём может содержаться максимум один разделитель (точка), цифры должны быть по обеим сторонам точки, например <em>3.14</em>.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_NUMBER_EXPONENTIAL] = "Запрещено записывать числа в экспоненциальной форме. Следует перезаписать число.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_VERTICAL_SLASH] = "Вертикальную черту использовать запрещено. Для взятия модуля от числа существует функция <em>abs(аргумент)</em>.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_STARSTAR] = "Форма записи <b>«**»</b> запрещена. Чтобы возводить аргумент в степень, используйте символ «каретка» <em>(“^”)</em> или функцию <em>power(аргумент, степень)</em>.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_EQUALEQUAL] = " Запрещено записывать два знака равенства подряд. Используйте <em>один</em> знак равенства для сравнений и присвоений.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_MISPLACED_DOT] = "Точка может использоваться только для разделения целой и дробной части в числах. Здесь она лишняя.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_SB_LEFT] = "Запрещено использовать квадратные скобки. Поставьте открывающуюся круглую скобку.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_SB_RIGHT] = "Запрещено использовать квадратные скобки. Поставьте закрывающуюся круглую скобку.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_CB_LEFT] = "Запрещено использовать фигурные скобки. Поставьте открывающуюся круглую скобку.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_CB_RIGHT] = "Запрещено использовать фигурные скобки. Поставьте закрывающуюся круглую скобку.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_AB_LEFT] = "Запрещено использовать угловые скобки. Поставьте открывающуюся круглую скобку.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_AB_RIGHT] = "Запрещено использовать угловые скобки. Поставьте закрывающуюся круглую скобку.";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_BACK_SLASH] = "Запрещено использовать обратную косую черту. Для операции деления используйте <em>прямую косую черту</em> ( / ).";
+Lang.db.math_message["e_lex_" + MathToken.TYPE_E_REST] = "Введённая строка содержит слишком много символов, и была разобрана не полностью.";
 
 //################################
 // Syntax errors
